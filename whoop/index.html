@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whoop × Anyscale</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .prose h1,.prose h2 { font-size:1.5rem; font-weight:700; margin:2rem 0 1rem; color:#111827; }
+    .prose h3 { font-size:1.125rem; font-weight:600; margin:1.5rem 0 0.5rem; color:#1f2937; }
+    .prose p { margin:1rem 0; }
+    .prose ul { list-style:disc; padding-left:1.5rem; margin:1rem 0; }
+    .prose li { margin:0.4rem 0; }
+    .prose strong { font-weight:600; }
+    .prose code { background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; font-size:0.85em; font-family:monospace; }
+    .prose pre { background:#0f172a; padding:1.25rem; border-radius:0.75rem; overflow-x:auto; margin:1.25rem 0; }
+    .prose pre code { background:none; padding:0; color:#e2e8f0; font-size:0.85em; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding-left:1rem; color:#6b7280; font-style:italic; margin:1.25rem 0; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center">
+        <span class="text-white font-bold text-xs">A</span>
+      </div>
+      <span class="font-semibold text-sm text-gray-900">Whoop × Anyscale</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#opportunity" class="text-gray-500 hover:text-gray-900 transition-colors">Opportunity</a>
+      <a href="#deep-dives" class="text-gray-500 hover:text-gray-900 transition-colors">Deep Dives</a>
+      <a href="#architecture" class="text-gray-500 hover:text-gray-900 transition-colors">Architecture</a>
+      <a href="#code" class="text-gray-500 hover:text-gray-900 transition-colors">Code</a>
+      <a href="#next-steps" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full transition-colors font-medium">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative pt-32 pb-28 bg-gray-950 text-white overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(59,130,246,0.25),transparent)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_80%_60%,rgba(99,102,241,0.15),transparent)]"></div>
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-sm mb-8 backdrop-blur-sm">
+      <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+      Personalized for Whoop
+    </div>
+    <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tight mb-6 max-w-4xl">Whoop × Anyscale: Advancing Real-Time Fitness Insights</h1>
+    <p class="text-xl md:text-2xl text-blue-100/80 mb-10 max-w-2xl leading-relaxed">Together, Whoop and Anyscale enhance real-time data processing, ensuring seamless, personalized health tracking with low latency and optimized model adaptability for every user.</p>
+    <div class="flex flex-wrap gap-4">
+      <a href="#opportunity" class="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold transition-colors">
+        Explore the opportunity →
+      </a>
+      <a href="#next-steps" class="inline-flex items-center px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-semibold transition-colors backdrop-blur-sm">
+        Book a demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- POV / Opportunity -->
+<section id="opportunity" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <div class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">The Opportunity</p>
+        <div class="prose text-gray-700 leading-relaxed" id="pov-content"></div>
+      </div>
+      <div class="space-y-8 lg:pt-8">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Primary Use Case</p>
+          <p class="font-medium text-gray-800">WHOOP’s product relies on continuous 52 Hz sensor streams used by validated ML models for sleep staging, a daily Recovery Score, and a Day Strain metric. These workloads demand real-time ingestion, low-latency inference, frequent retraining, and robust experiment velocity. Personalization implies per-user adaptation or model variants, increasing serving complexity and storage/latency demands for historical data.</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Challenges We Solve</p>
+          <ul class="space-y-2"><li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Unify workloads
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Cost &amp; autoscaling
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Latency &amp; cold starts
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Faster R&amp;D
+    </li></ul>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+          <p class="text-sm font-semibold text-blue-800 mb-1">Built on Ray</p>
+          <p class="text-xs text-blue-600 leading-relaxed">The unified open-source framework for distributed AI — data processing, training, and serving at any scale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts -->
+<section id="deep-dives" class="py-24 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Deep Dives</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Technical Guides for Your Team</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(0)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 1 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Whoop × Anyscale: A Technical Blueprint for Real-Time ML at Scale</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">Explore how Whoop and Anyscale collaborate to tackle real-time ML challenges using continuous sensor streams, personalized models, and robust data pipelines. This post dives into their joint efforts to unify workloads and optimize performance.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-0">Read article ↓</span>
+      <div id="blog-body-0" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(1)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 2 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Whoop and Anyscale: Solving Unify Workloads at Scale</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">This joint technical exploration unveils how Whoop and Anyscale collaborate to tackle real-time data ingestion, low-latency inference, and adaptive model serving demands at scale.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-1">Read article ↓</span>
+      <div id="blog-body-1" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section id="architecture" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Recommended Architecture</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Reference Architecture</h2>
+    <p class="text-gray-500 max-w-2xl mb-12 leading-relaxed">Whoop and Anyscale are collaborating to build a unified architecture leveraging Ray for real-time data ingestion from wearable devices, seamless integration with ML models for personalized sleep and recovery insights, and efficient model serving. This architecture emphasizes reducing latency, optimizing costs with autoscaling, and accelerating R&amp;D through a robust pipeline that supports frequent retraining and rapid experimentation.</p>
+    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 overflow-x-auto">
+      <div id="mermaid-diagram" class="flex justify-center min-h-[200px] items-center"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Code Examples -->
+<section id="code" class="py-24 bg-gray-950">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Getting Started</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Curated Code Examples</h2>
+    <p class="text-gray-400 mb-12 max-w-2xl leading-relaxed">
+      Production-ready templates from the Anyscale library, selected for your use case.
+      Clone and run in minutes on Anyscale.
+    </p>
+    <div class="space-y-6">
+      
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Multi-Node LLM Deployment</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template is specifically designed for WHOOP's advanced sensor data processing needs, enabling seamless multi-node deployment of large language models (LLMs) on Anyscale. It facilitates real-time ingestion and low-latency inference of WHOOP's 52 Hz sensor streams, while supporting frequent retraining and robust experiment velocity. The solution is tailored for WHOOP's personalized user experiences, allowing for efficient model adaptation and management of historical data to enhance sleep staging, Recovery Score, and Day Strain metrics.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/ray_serve_llm" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># This code snippet demonstrates how WHOOP can deploy LLMs on Anyscale for processing 52 Hz sensor streams.
+# The setup ensures low-latency inference and supports WHOOP's need for frequent model retraining and personalization.
+
+import ray
+from ray import serve
+
+# Initialize Ray
+ray.init(address='auto')
+
+# Define a deployment for WHOOP's sensor data processing
+@serve.deployment
+class WhoopModel:
+    def __init__(self, model_path):
+        self.model = load_model(model_path)  # Load the pre-trained model
+
+    async def __call__(self, request):
+        data = await request.json()
+        # Process the 52 Hz sensor data
+        result = self.model.infer(data['sensor_stream'])
+        return {'inference_result': result}
+
+# Deploy the model on Anyscale
+WhoopModel.deploy(model_path='path/to/whoop_model')</code></pre>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Hyperparameter Optimization with Ray Tune</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template is designed to optimize WHOOP’s machine learning models that process continuous 52 Hz sensor streams for sleep staging, daily Recovery Scores, and Day Strain metrics. By leveraging Ray Tune on Anyscale, Whoop's engineering team can efficiently perform hyperparameter optimization, ensuring low-latency inference and frequent retraining. This setup facilitates real-time ingestion and robust experiment velocity, crucial for personalized user adaptations and managing the complexity of model variants.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/intro-tune" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># This code snippet demonstrates how WHOOP can use Ray Tune on Anyscale
+# to optimize hyperparameters for their ML models processing 52 Hz sensor streams.
+# This is crucial for achieving low-latency inference and frequent retraining.
+
+import ray
+from ray import tune
+from ray.tune.schedulers import ASHAScheduler
+
+# Define the training function
+def train_model(config):
+    # Simulate training process
+    for epoch in range(10):
+        # Placeholder for training logic
+        tune.report(loss=(config['param1'] - 0.5) ** 2)
+
+# Initialize Ray
+ray.init()
+
+# Define search space
+search_space = {
+    'param1': tune.uniform(0, 1),
+}
+
+# Configure the scheduler
+scheduler = ASHAScheduler(
+    metric='loss',
+    mode='min',
+    max_t=10,
+    grace_period=1,
+    reduction_factor=2
+)
+
+# Run hyperparameter optimization
+analysis = tune.run(
+    train_model,
+    config=search_space,
+    num_samples=10,
+    scheduler=scheduler
+)
+
+print('Best config: ', analysis.get_best_config(metric='loss', mode='min'))</code></pre>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Production LLM Serving with Ray Serve</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template is specifically designed for WHOOP and Anyscale to collaboratively address the unique demands of WHOOP's product, which relies on continuous 52 Hz sensor streams. It facilitates real-time ingestion and low-latency inference critical for sleep staging, daily Recovery Score, and Day Strain metrics. By leveraging Ray Serve on Anyscale, WHOOP can ensure rapid retraining, robust experiment velocity, and personalized model adaptation, efficiently managing the complexity and storage demands of historical data.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/deployment-serve-llm" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Example code snippet for WHOOP's real-time sensor stream processing using Ray Serve on Anyscale
+from ray import serve
+import time
+
+# Define a deployment for processing WHOOP's sensor data
+@serve.deployment
+class WhoopModel:
+    def __init__(self, model):
+        self.model = model
+
+    def __call__(self, sensor_data):
+        # Simulate real-time inference for sleep staging
+        result = self.model.predict(sensor_data)
+        return {'sleep_stage': result}
+
+# Initialize Ray Serve and deploy the model
+serve.start()
+whoop_model = WhoopModel.bind(your_pretrained_model)
+serve.run(whoop_model)
+
+# Example of ingesting a sensor data stream
+while True:
+    sensor_data = get_sensor_data()  # Function to fetch real-time sensor data
+    response = whoop_model(sensor_data)
+    print(response)
+    time.sleep(1/52)  # Simulating 52 Hz data stream</code></pre>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Ray Jobs for Production Batch Workloads</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template is specifically designed to address Whoop's need for efficient processing of continuous 52 Hz sensor streams. By leveraging Anyscale's scalable infrastructure, it enables real-time data ingestion and low-latency inference, essential for accurate sleep staging, Recovery Score calculations, and Day Strain metrics. The template also supports frequent retraining and per-user model personalization, ensuring robust performance and adaptability to individual user data patterns.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/intro-jobs" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># This code snippet demonstrates how Whoop can utilize Ray on Anyscale for processing sensor streams
+# and performing real-time inference, critical for sleep staging and Recovery Score calculations.
+import ray
+
+@ray.remote
+def process_sensor_data(sensor_stream):
+    # Simulate processing of 52 Hz sensor data
+    processed_data = sensor_stream * 2  # Placeholder for actual data processing logic
+    return processed_data
+
+@ray.remote
+def perform_inference(processed_data):
+    # Simulate inference logic for sleep staging
+    inference_result = processed_data / 2  # Placeholder for actual inference logic
+    return inference_result
+
+# Initialize Ray
+ray.init()
+
+# Example sensor stream data
+sensor_stream = [1, 2, 3, 4, 5]
+
+# Process and infer using Ray tasks
+processed_data = process_sensor_data.remote(sensor_stream)
+inference_result = perform_inference.remote(processed_data)
+
+# Fetch the result
+print(ray.get(inference_result))</code></pre>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Next Steps -->
+<section id="next-steps" class="py-24 bg-blue-600 text-white">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-4">Next Steps</p>
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">
+      Ready to accelerate Whoop's AI journey?
+    </h2>
+    <p class="text-xl text-blue-100 mb-14 max-w-2xl mx-auto leading-relaxed">
+      Join leading AI teams who scaled from prototype to production with Anyscale.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+      <a href="https://www.anyscale.com/contact" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Talk to an Engineer</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Get a technical walkthrough of your specific use case</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Schedule a call →</span>
+      </a>
+      <a href="https://console.anyscale.com/" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Start Free Trial</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Run your first workload on Anyscale today — no setup required</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Get started →</span>
+      </a>
+      <a href="https://www.anyscale.com/demo" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Book a Demo</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">See how teams like yours build and scale with Ray on Anyscale</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Book now →</span>
+      </a>
+    </div>
+    <p class="text-blue-200 text-sm">
+      Questions? Email <a href="mailto:sales@anyscale.com" class="underline hover:text-white">sales@anyscale.com</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  // Blog post content
+  window.__blog0 = "## The Whoop × Anyscale Challenge: Real-Time ML at Scale\n\nWhoop's wearable technology relies on continuous 52 Hz sensor streams to power validated machine learning models for sleep staging, daily Recovery Scores, and Day Strain metrics. These models necessitate real-time data ingestion, low-latency inference, and frequent retraining, all while maintaining robust experiment velocity. Our collaboration with Anyscale is crucial in addressing these demands as we work to unify workloads, manage cost and autoscaling, reduce latency and cold starts, and accelerate research and development.\n\n## Unifying Workloads with Whoop and Anyscale\n\nIn the realm of wearable technology, the ability to process and analyze data in real-time is paramount. Our current stack, which includes SageMaker, EC2, S3, Kafka, Snowflake, Kubernetes, Airflow, MLflow, and Outerbanks, supports a wide array of tasks. However, the complexity of our workflows demands a more unified approach. Together, Whoop and Anyscale are leveraging Ray as our shared platform to streamline these processes, enabling us to handle diverse workloads efficiently by unifying batch and streaming operations seamlessly.\n\n## Handling Personalization and Model Variants\n\nPersonalization is at the heart of Whoop's offerings. Each user benefits from model variants or adaptations tailored to their unique data patterns. This personalization increases the complexity of serving models and the demands on storage and latency for historical data. Anyscale's scalable architecture allows us to manage this complexity by facilitating rapid deployment and scaling of personalized models, ensuring every user receives timely and tailored insights.\n\n## Real-Time Ingestion and Low-Latency Inference\n\nReal-time data ingestion and low-latency inference are critical for Whoop's sensor-driven insights. Utilizing Ray's distributed computing capabilities, our teams have developed a robust real-time pipeline that ingests sensor streams and performs low-latency inference.\n\n```python\nimport ray\nfrom ray import serve\n\n# Define a model deployment for Whoop's sleep staging model\n@serve.deployment(route_prefix=\"/infer\")\nclass SleepStagingModel:\n    def __init__(self, model_path):\n        self.model = load_model(model_path)\n\n    def __call__(self, request):\n        # Process incoming sensor data for Whoop's use case\n        data = request.json()[\"sensor_data\"]\n        predictions = self.model.predict(data)\n        return {\"staging\": predictions}\n\n# Deploy model with Ray serve for real-time inference\nray.init()\nSleepStagingModel.deploy(model_path=\"/models/sleep_staging\")\n```\n\nThis Python + Ray example demonstrates how we can deploy a sleep staging model for real-time inference, crucial for processing Whoop's continuous sensor streams efficiently.\n\n## Accelerating R&D with Whoop × Anyscale\n\nFaster R&D cycles are essential to stay competitive in the fast-paced world of wearable technology. By leveraging Anyscale's platform, our teams can conduct experiments with greater velocity and iterate on models more rapidly. This capability allows us to test new features and improvements, ensuring that Whoop's products remain at the cutting edge.\n\n## Joint Next Steps for Whoop and Anyscale\n\n1. **Optimize Autoscaling:** Enhance our autoscaling strategies to better manage the dynamic workloads that come with real-time data processing and personalized model serving.\n\n2. **Improve Cold Start Latency:** Work together to reduce cold start times for model deployments, ensuring that users always experience fast, reliable service.\n\n3. **Expand Experimentation Frameworks:** Develop more robust frameworks for experimentation, allowing Whoop's data scientists to test and deploy new models with increased agility and confidence.\n\nTogether, Whoop and Anyscale are committed to overcoming the challenges of real-time ML at scale, ensuring that our users continue to receive the most accurate and personalized insights from their wearable devices.";
+    window.__blog1 = "## Introduction: Whoop and Anyscale Collaboration\n\nIn the bustling domain of wearable technology, Whoop stands out with its sophisticated use of continuous 52 Hz sensor streams to deliver actionable insights on personal health metrics such as sleep staging, recovery scores, and day strain. The challenge? Real-time ingestion, low-latency inference, frequent model retraining, and personalized model variants for each user. Our teams at Whoop and Anyscale have joined forces to address these intricate needs through a shared platform approach.\n\n## The Whoop × Anyscale Ecosystem\n\nWhoop's current stack includes tools like SageMaker, EC2, S3, Kafka, Snowflake, Kubernetes, Airflow, MLflow, and Outerbanks. While these tools are robust, they present challenges in unifying workloads and managing the cost and complexity of auto-scaling. By leveraging Anyscale's capabilities, we aim to streamline these processes, reducing latency and minimizing cold starts.\n\n## Whoop's Real-Time Data Processing with Ray\n\nOne of the pivotal aspects of Whoop's technology is real-time data processing. Handling 52 Hz sensor streams requires a platform that can ingest, process, and infer data swiftly and reliably. Together, we implemented a Ray-based solution to handle these high-frequency data streams efficiently.\n\n```python\nimport ray\n\n# Initialize Ray\nray.init()\n\n@ray.remote\ndef process_sensor_data(sensor_batch):\n    # Simulate processing of sensor data for Whoop's metrics\n    processed_data = [x * 0.5 for x in sensor_batch]  # Placeholder for complex computation\n    return processed_data\n\n# Example sensor data stream (52 Hz)\nsensor_stream = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\n\n# Process each batch in parallel\nfutures = [process_sensor_data.remote(batch) for batch in sensor_stream]\nprocessed_results = ray.get(futures)\n\nprint(\"Processed sensor data:\", processed_results)\n```\n\nThis example showcases how Ray's distributed processing capabilities can be harnessed to parallelize the handling of sensor data, ensuring low-latency inference for Whoop's users.\n\n## Whoop and Anyscale: Personalized Model Variants\n\nPersonalization is at the heart of Whoop's user experience. The ability to adapt models per user or create variants per individual demands sophisticated model serving strategies. Using Ray, we can manage numerous model variants efficiently, reducing latency in serving personalized recommendations.\n\n## Overcoming Latency and Cold Starts\n\nLatency and cold starts pose significant challenges in delivering real-time insights to Whoop's users. By integrating Anyscale's platform, we can pre-warm instances and optimize resource allocation dynamically. This ensures that user requests are handled swiftly, providing immediate value without the typical delays associated with cold starts.\n\n## Faster R&D Cycles with Whoop and Anyscale\n\nTogether, our teams have also focused on accelerating R&D cycles by leveraging Ray's rapid experimentation capabilities. Experiment velocity is crucial for iterating on new features and models, allowing Whoop to stay ahead in the competitive wearable tech industry.\n\n## Next Steps for Whoop and Anyscale\n\n1. **Optimize Resource Allocation**: Continue optimizing resource allocation strategies on Anyscale to further reduce costs while maintaining performance.\n2. **Enhance Personalization Framework**: Develop a robust framework for handling an even greater number of personalized model variants, improving user-specific insights.\n3. **Expand Experimentation Capabilities**: Increase the scope of rapid experimentation to explore new metrics and features, ensuring Whoop's offering remains cutting-edge.\n\nBy working in tandem, Whoop and Anyscale are not just solving today's challenges but are also paving the way for future innovations in the wearable technology space.";
+
+  // Render POV markdown
+  document.getElementById('pov-content').innerHTML = marked.parse("As artificial intelligence continues to redefine the technological landscape, the integration of real-time data processing, advanced machine learning, and personalized insights is becoming paramount. WHOOP stands at the forefront of this evolution, offering a wearable fitness tracker that translates complex health metrics into actionable insights for users. In this future, the collaboration between Whoop and Anyscale aims to pioneer scalable, efficient, and adaptive AI solutions that enhance the health and performance of individuals globally.\n\n## The Whoop Scale Challenge\n\nWhoop's engineering team faces the formidable challenge of managing and scaling an infrastructure capable of processing continuous 52 Hz sensor streams for thousands of users. The demands for real-time ingestion and low-latency inference are non-negotiable, as they directly affect the accuracy and timeliness of Whoop’s Recovery Score and Day Strain metrics. Unifying workloads across diverse and complex pipelines has been an ongoing struggle, compounded by the need for cost-efficient autoscaling and minimizing cold start delays. Moreover, Whoop’s commitment to personalized insights necessitates per-user model adaptation, which increases the complexity of serving and storing vast amounts of historical data. The team also seeks to accelerate their R&D efforts to maintain a competitive edge in the fast-evolving wearable technology market.\n\n## What Whoop and Anyscale Are Solving Together\n\nIn a concerted effort to overcome these challenges, Whoop and Anyscale are collaborating to leverage the power of Ray, a unified platform for scalable machine learning and data processing. Together, we aim to streamline Whoop's ML workloads and enhance their experiment velocity. Ray Data will be instrumental in efficiently processing the high-frequency sensor streams, ensuring that data ingestion is both robust and scalable. Ray Train will empower Whoop to execute frequent retraining of their models, facilitating rapid adaptation to new data and user-specific patterns. Lastly, Ray Serve will address the critical need for low-latency inference, enabling Whoop to deliver real-time insights without compromising on performance.\n\nThis partnership is characterized by a joint commitment to innovation and excellence, with both companies bringing their unique expertise to the table. By integrating Anyscale's advanced capabilities with Whoop’s cutting-edge health technology, we are setting the foundation for a next-generation AI infrastructure that not only meets current demands but is also poised to handle future advancements.\n\n## The Whoop × Anyscale Architecture\n\nThe proposed architecture for Whoop on Anyscale is built around a seamless integration of existing infrastructure with Ray's distributed execution framework. Data ingestion will be managed through Kafka, feeding directly into Ray Data for real-time processing and storage in S3. Ray Train will interface with Whoop’s MLflow setup, allowing for streamlined model training and versioning. This setup will facilitate Whoop’s need for rapid model retraining and evaluation, supported by Airflow for orchestration and Snowflake for data warehousing.\n\nRay Serve will be deployed atop Kubernetes, providing scalable and low-latency model serving capabilities. This architecture ensures that Whoop can maintain high throughput and low-latency responses, essential for delivering real-time insights to users. Anyscale's autoscaling features will be critical in optimizing resource utilization, reducing costs, and eliminating cold starts, thus addressing one of Whoop’s key pain points. Together, we are crafting a future-proof architecture that embodies resilience, adaptability, and efficiency.\n\n## Whoop on Anyscale: What Comes Next\n\nAs we advance in this partnership, Whoop’s team is poised to achieve significant milestones that will enhance their primary use case of delivering personalized health insights. The integration with Anyscale will enable Whoop to unify and scale their workloads effectively, reducing operational complexity and costs. By improving latency and accelerating their R&D processes, Whoop can focus on refining their product offerings and exploring new frontiers in health technology. Together, Whoop and Anyscale are not only addressing today’s challenges but are also charting a path toward a more intelligent and responsive future in wearable technology.");
+
+  // Blog toggle
+  function toggleBlog(i) {
+    const body = document.getElementById('blog-body-' + i);
+    const toggle = document.getElementById('blog-toggle-' + i);
+    const blogData = [window.__blog0, window.__blog1];
+    if (body.classList.contains('hidden')) {
+      if (!body.dataset.rendered) {
+        body.innerHTML = marked.parse(blogData[i] || '');
+        body.dataset.rendered = '1';
+        // Re-run hljs on any code blocks inside
+        body.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+      }
+      body.classList.remove('hidden');
+      toggle.textContent = 'Collapse ↑';
+    } else {
+      body.classList.add('hidden');
+      toggle.textContent = 'Read article ↓';
+    }
+  }
+
+  // Syntax highlight code examples
+  hljs.registerLanguage('python', window.hljsDefinePython || (() => ({})));
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code').forEach(el => {
+      try { hljs.highlightElement(el); } catch(e) {}
+    });
+  });
+
+  // Mermaid — use JS API to avoid HTML-entity encoding issues
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#EFF6FF',
+      primaryTextColor: '#1E40AF',
+      primaryBorderColor: '#93C5FD',
+      lineColor: '#60A5FA',
+      secondaryColor: '#F0FDF4',
+      tertiaryColor: '#FEF3C7',
+      fontSize: '14px',
+    },
+  });
+  (async () => {
+    const el = document.getElementById('mermaid-diagram');
+    if (!el) return;
+    try {
+      const diagram = "flowchart TD\n  subgraph Ingestion\n    dataSources[Data Sources]\n    kafka[Kafka]\n    dataSources --> kafka\n  end\n  subgraph RayProcessing\n    rayData[Ray Data]\n    rayTrain[Ray Train]\n    rayServe[Ray Serve]\n    kafka --> rayData\n    rayData --> rayTrain\n    rayTrain --> rayServe\n  end\n  subgraph Storage\n    s3[S3]\n    modelReg[Model Registry]\n    rayTrain --> s3\n    s3 --> modelReg\n  end\n  subgraph Serving\n    serveEndpoint[Serving Endpoint]\n    rayServe --> serveEndpoint\n  end\n  subgraph Downstream\n    apps[Applications]\n    serveEndpoint --> apps\n  end";
+      const { svg } = await mermaid.render('arch', diagram);
+      el.innerHTML = svg;
+      el.querySelector('svg').style.maxWidth = '100%';
+    } catch (e) {
+      el.innerHTML = '<p style="color:#ef4444;font-size:0.875rem">Diagram rendering failed: ' + e.message + '</p>';
+    }
+  })();
+</script>
+</body>
+</html>
