@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Imagen × Anyscale</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/languages/python.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .prose h1,.prose h2 { font-size:1.5rem; font-weight:700; margin:2rem 0 1rem; color:#111827; }
+    .prose h3 { font-size:1.125rem; font-weight:600; margin:1.5rem 0 0.5rem; color:#1f2937; }
+    .prose p { margin:1rem 0; }
+    .prose ul { list-style:disc; padding-left:1.5rem; margin:1rem 0; }
+    .prose li { margin:0.4rem 0; }
+    .prose strong { font-weight:600; }
+    .prose code { background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; font-size:0.85em; font-family:monospace; }
+    .prose pre { background:#0f172a; padding:1.25rem; border-radius:0.75rem; overflow-x:auto; margin:1.25rem 0; }
+    .prose pre code { background:none; padding:0; color:#e2e8f0; font-size:0.85em; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding-left:1rem; color:#6b7280; font-style:italic; margin:1.25rem 0; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 bg-blue-600 rounded flex items-center justify-center">
+        <span class="text-white font-bold text-xs">A</span>
+      </div>
+      <span class="font-semibold text-sm text-gray-900">Imagen × Anyscale</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#opportunity" class="text-gray-500 hover:text-gray-900 transition-colors">Opportunity</a>
+      <a href="#deep-dives" class="text-gray-500 hover:text-gray-900 transition-colors">Deep Dives</a>
+      <a href="#architecture" class="text-gray-500 hover:text-gray-900 transition-colors">Architecture</a>
+      <a href="#code" class="text-gray-500 hover:text-gray-900 transition-colors">Code</a>
+      <a href="#next-steps" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full transition-colors font-medium">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative pt-32 pb-28 bg-gray-950 text-white overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(59,130,246,0.25),transparent)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_80%_60%,rgba(99,102,241,0.15),transparent)]"></div>
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-sm mb-8 backdrop-blur-sm">
+      <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+      Personalized for Imagen
+    </div>
+    <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tight mb-6 max-w-4xl">Master Complex Video Processing and Multimodal Data</h1>
+    <p class="text-xl md:text-2xl text-blue-100/80 mb-10 max-w-2xl leading-relaxed">Streamline your data-to-training workflows, optimize GPU usage, and break through personalization barriers at scale with Imagen's cutting-edge technology solutions.</p>
+    <div class="flex flex-wrap gap-4">
+      <a href="#opportunity" class="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold transition-colors">
+        Explore the opportunity →
+      </a>
+      <a href="#next-steps" class="inline-flex items-center px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-semibold transition-colors backdrop-blur-sm">
+        Book a demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- POV / Opportunity -->
+<section id="opportunity" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <div class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">The Opportunity</p>
+        <div class="prose text-gray-700 leading-relaxed" id="pov-content"></div>
+      </div>
+      <div class="space-y-8 lg:pt-8">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Primary Use Case</p>
+          <p class="font-medium text-gray-800">Scalable video processing, fine tune stable diffusion, Multi modal data workloads</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Challenges We Solve</p>
+          <ul class="space-y-2"><li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Fragmented Data-to-Training Loop
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Video Scaling &amp; GPU &quot;Starvation&quot;
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>The &quot;Personalization Wall&quot; at Scale
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Cost Bottlenecks for Multimodal Experiments
+    </li></ul>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+          <p class="text-sm font-semibold text-blue-800 mb-1">Built on Ray</p>
+          <p class="text-xs text-blue-600 leading-relaxed">The unified open-source framework for distributed AI — data processing, training, and serving at any scale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts -->
+<section id="deep-dives" class="py-24 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Deep Dives</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Technical Guides for Your Team</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(0)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 1 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Scaling Scalable Video Processing, Fine-Tune Stable Diffusion, and Multi-Modal Data Workloads: A Production Engineering Guide</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">Discover how Imagen tackles the challenges of scalable video processing, fine-tuning stable diffusion, and multi-modal data workloads with efficient production engineering techniques.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-0">Read article ↓</span>
+      <div id="blog-body-0" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(1)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 2 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">How Technology Teams Are Solving Fragmented Data-to-Training Loop with Distributed AI</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">Discover how Imagen's engineering team addresses the challenges of fragmented data pipelines and GPU resource optimization by leveraging distributed AI frameworks like Ray.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-1">Read article ↓</span>
+      <div id="blog-body-1" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section id="architecture" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Recommended Architecture</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Reference Architecture</h2>
+    <p class="text-gray-500 max-w-2xl mb-12 leading-relaxed">The architecture leverages Ray to efficiently process and train on large-scale video and multimodal data. It addresses key challenges by integrating Ray Data for data ingestion and preprocessing, Ray Train for distributed model training, and Ray Serve for scalable inference, ensuring seamless data-to-training loops and efficient resource utilization.</p>
+    <div class="bg-gray-50 rounded-2xl p-8 border border-gray-100 overflow-x-auto">
+      <div class="mermaid flex justify-center">
+flowchart TD
+  subgraph Data_Ingestion
+    A[Video Data Sources]
+    B[Multimodal Data Sources]
+  end
+  subgraph Ray_Pipeline
+    C[Ray Data]
+    D[Ray Train]
+    E[Ray Serve]
+  end
+  subgraph Model_Storage
+    F[Model Registry]
+  end
+  A --&gt; C
+  B --&gt; C
+  C --&gt; D
+  D --&gt; F
+  F --&gt; E
+  subgraph Inference_Endpoint
+    G[Serving Endpoint]
+  end
+  E --&gt; G
+  subgraph Consumers
+    H[Applications]
+  end
+  G --&gt; H
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Code Examples -->
+<section id="code" class="py-24 bg-gray-950">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Getting Started</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Curated Code Examples</h2>
+    <p class="text-gray-400 mb-12 max-w-2xl leading-relaxed">
+      Production-ready templates from the Anyscale library, selected for your use case.
+      Clone and run in minutes on Anyscale.
+    </p>
+    <div class="space-y-6">
+      
+    </div>
+  </div>
+</section>
+
+<!-- Next Steps -->
+<section id="next-steps" class="py-24 bg-blue-600 text-white">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-4">Next Steps</p>
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">
+      Ready to accelerate Imagen's AI journey?
+    </h2>
+    <p class="text-xl text-blue-100 mb-14 max-w-2xl mx-auto leading-relaxed">
+      Join leading AI teams who scaled from prototype to production with Anyscale.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+      <a href="https://www.anyscale.com/contact" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Talk to an Engineer</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Get a technical walkthrough of your specific use case</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Schedule a call →</span>
+      </a>
+      <a href="https://console.anyscale.com/" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Start Free Trial</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Run your first workload on Anyscale today — no setup required</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Get started →</span>
+      </a>
+      <a href="https://www.anyscale.com/demo" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Book a Demo</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">See how teams like yours build and scale with Ray on Anyscale</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Book now →</span>
+      </a>
+    </div>
+    <p class="text-blue-200 text-sm">
+      Questions? Email <a href="mailto:sales@anyscale.com" class="underline hover:text-white">sales@anyscale.com</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  // Blog post content
+  window.__blog0 = "## Introduction\n\nIn the rapidly evolving landscape of technology, Imagen is at the forefront of scalable video processing, fine-tuning stable diffusion, and managing multi-modal data workloads. However, the path to innovation is not without its challenges. In this post, we'll explore the pain points associated with these processes and how leveraging tools like Ray can help overcome them.\n\n## Challenges in Video Processing and Data Workloads\n\n1. **Fragmented Data-to-Training Loop**: The transition from raw data to model training is often disjointed, leading to inefficiencies.\n2. **Video Scaling & GPU \"Starvation\"**: Efficiently scaling video processing without leaving GPUs underutilized is a persistent challenge.\n3. **The \"Personalization Wall\" at Scale**: As demand for personalized content increases, scaling these capabilities without sacrificing performance becomes critical.\n4. **Cost Bottlenecks for Multimodal Experiments**: Balancing the costs of running complex multimodal experiments while maintaining performance is a significant hurdle.\n\n## Leveraging Ray for Scalable Solutions\n\nRay, an open-source framework, is uniquely positioned to address these challenges by providing a unified platform for distributed computing. Here's how it can help:\n\n- **Unified Data and Training Pipeline**: Ray allows for seamless integration between data processing and model training, reducing fragmentation.\n- **Efficient Resource Utilization**: Its ability to dynamically allocate resources ensures that GPUs are optimally utilized, eliminating \"starvation.\"\n- **Scalable Personalization**: Ray's support for distributed computing enables scaling personalization efforts without compromising on speed or performance.\n- **Cost-Effective Experimentation**: By streamlining resource management, Ray helps control costs while running complex multimodal experiments.\n\n## Example: Video Processing with Ray\n\nLet's look at a concrete example of how Ray can be used to process video data efficiently. This example demonstrates a simple video processing pipeline that scales across multiple nodes:\n\n```python\nimport ray\nimport cv2\n\nray.init()\n\n@ray.remote\ndef process_frame(frame):\n    # Apply some processing to the frame\n    processed_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)\n    return processed_frame\n\n@ray.remote\ndef process_video(video_path):\n    cap = cv2.VideoCapture(video_path)\n    processed_frames = []\n    while cap.isOpened():\n        ret, frame = cap.read()\n        if not ret:\n            break\n        processed_frame = process_frame.remote(frame)\n        processed_frames.append(processed_frame)\n    cap.release()\n    return ray.get(processed_frames)\n\nvideo_paths = [\"video1.mp4\", \"video2.mp4\"]\nresults = ray.get([process_video.remote(path) for path in video_paths])\n```\n\nThis code demonstrates how Ray can distribute video processing tasks across multiple nodes, ensuring efficient utilization of resources.\n\n## Conclusion\n\nBy integrating Ray into its workflows, Imagen can address the fragmentation, resource underutilization, and cost challenges associated with scalable video processing and multimodal data workloads. This approach not only optimizes existing processes but also paves the way for more innovative solutions.\n\n## Next Steps\n\n1. **Pilot Ray in a Controlled Environment**: Test the integration of Ray into a small segment of your video processing pipeline to evaluate its impact.\n2. **Resource Allocation Optimization**: Analyze and adjust resource allocation strategies to ensure maximum efficiency across workloads.\n3. **Expand to Multimodal Experiments**: Leverage Ray's capabilities to run cost-effective multimodal data experiments at scale.\n\nBy following these steps, Imagen can continue to lead in technology innovation while addressing key production engineering challenges.";
+    window.__blog1 = "## Introduction\n\nIn the rapidly evolving landscape of technology, companies like Imagen face unique challenges in managing scalable video processing, fine-tuning stable diffusion models, and executing multimodal data workloads. These tasks are often hampered by fragmented data-to-training loops, GPU 'starvation', and the daunting 'personalization wall' at scale. Furthermore, the cost bottlenecks associated with multimodal experiments only add to the complexity. However, distributed AI frameworks like Ray offer promising solutions to these issues.\n\n## Challenges in the Data-to-Training Loop\n\nAt Imagen, the data-to-training loop is often fragmented. This fragmentation results in inefficiencies and delays, particularly when dealing with high-volume video data and multimodal experiments. The challenge is further compounded by the need for fine-tuning models, which requires seamless data integration and processing capabilities.\n\n### Video Scaling and GPU \"Starvation\"\n\nThe demand for high-quality video processing is skyrocketing, yet GPU resources remain finite. This 'starvation' of resources can lead to bottlenecks, slowing down the entire processing pipeline. Efficiently utilizing GPUs across distributed systems is crucial to overcoming this hurdle.\n\n### The \"Personalization Wall\"\n\nPersonalizing content at scale is another significant challenge. As the volume of data increases, so does the complexity of delivering personalized experiences. This requires robust, scalable solutions that can handle extensive data processing and model training simultaneously.\n\n### Cost Bottlenecks in Multimodal Experiments\n\nRunning experiments that involve multiple data modalities can be prohibitively expensive. Optimizing these processes to minimize costs without sacrificing quality or speed is essential for maintaining a competitive edge.\n\n## Leveraging Distributed AI with Ray\n\nRay, an open-source distributed computing framework, offers a versatile solution to these challenges. It allows teams to build applications that scale seamlessly from a single laptop to a cluster of thousands of nodes.\n\n### Real-World Example: Distributed Video Processing\n\nHere's a practical example of how Imagen's engineering team can use Ray to process videos at scale:\n\n```python\nimport ray\nimport time\n\nray.init()\n\n@ray.remote\ndef process_video_segment(segment):\n    # Simulate video processing\n    time.sleep(1)\n    return f\"Processed segment {segment}\"\n\nvideo_segments = [f\"segment_{i}\" for i in range(10)]\n\n# Distribute video processing across multiple nodes\nfutures = [process_video_segment.remote(segment) for segment in video_segments]\n\n# Gather results\nresults = ray.get(futures)\n\nprint(\"Video processing results:\")\nfor result in results:\n    print(result)\n```\n\nIn this example, video segments are processed in parallel using Ray's remote functions. This approach not only accelerates processing times but also optimizes GPU resource usage, effectively addressing the issue of GPU 'starvation'.\n\n## Recommendations for Overcoming Industry Challenges\n\n1. **Adopt Distributed Frameworks:** Use frameworks like Ray to facilitate scalable, efficient data processing across distributed systems. This can significantly reduce the fragmentation in the data-to-training loop.\n\n2. **Optimize Resource Utilization:** Implement strategies to maximize GPU usage and minimize idle times, thereby avoiding 'starvation' and improving processing efficiency.\n\n3. **Streamline Multimodal Experiments:** Leverage distributed AI to streamline multimodal data handling, thereby reducing costs and improving experiment throughput.\n\n## Next Steps\n\n1. **Conduct a Pilot Project:** Implement a small-scale pilot using Ray to assess its impact on your current data processing pipelines.\n\n2. **Integrate Ray with Existing Workflows:** Gradually integrate Ray into your existing workflows to address specific pain points, such as video scaling and GPU optimization.\n\n3. **Evaluate and Scale:** Continuously evaluate the performance improvements and cost savings. Scale up the implementation based on initial results and team feedback.\n\nBy harnessing the power of distributed AI frameworks like Ray, technology teams can effectively overcome the challenges of fragmented data loops, resource constraints, and cost bottlenecks, paving the way for more efficient and scalable operations.";
+
+  // Render POV markdown
+  document.getElementById('pov-content').innerHTML = marked.parse("# The Future of AI: A Convergence of Scalability and Precision\n\nThe landscape of artificial intelligence is rapidly evolving, with technology pushing the boundaries of what is possible. As AI becomes more sophisticated, the demand for scalable and precise solutions has never been greater. The next frontier in AI is not just about creating smarter algorithms but also about efficiently deploying them across diverse environments. This shift demands infrastructure that can handle complex, multimodal data workloads and scale seamlessly without compromising on performance. Companies at the cutting edge of AI, like Imagen, are finding themselves at the intersection of these demands, needing robust solutions to keep pace with technological advancements.\n\n# The Infrastructure Dilemma at Imagen\n\nImagen, a leader in streamlining photography post-production through advanced culling, precise editing, and cloud storage, is confronted with several infrastructure challenges that hinder its growth. As Imagen scales, it faces a fragmented data-to-training loop, where data is often siloed, making it difficult to efficiently feed into machine learning models. This fragmentation complicates the culling and editing process, leading to inefficiencies in post-production workflows.\n\nMoreover, Imagen grapples with video scaling and GPU \"starvation.\" The high computational demands of video processing require substantial GPU resources, yet current infrastructure often results in underutilized or overburdened GPUs, leading to performance bottlenecks. Additionally, the \"personalization wall\" at scale presents a significant challenge. As Imagen seeks to offer personalized solutions to a growing customer base, the complexity of managing vast amounts of personalized data becomes a bottleneck, limiting the ability to deliver customized experiences efficiently.\n\n# Limitations of Existing Approaches\n\nTraditional approaches, such as cloud-managed machine learning platforms and homegrown infrastructure solutions, fall short in addressing these challenges. Cloud-managed ML platforms often offer limited flexibility and can become prohibitively expensive as workloads scale. Meanwhile, homegrown infrastructure lacks the sophistication and scalability needed to manage complex, multimodal data workloads efficiently. These solutions are often not designed to handle the dynamic nature of modern AI workloads, leading to inefficiencies and increased costs.\n\n# Ray's Unified Compute Model: A Comprehensive Solution\n\nEnter Ray, a unified compute model designed to address the specific infrastructure challenges faced by companies like Imagen. Ray offers a comprehensive solution that integrates data processing, model training, and deployment into a seamless workflow. With Ray Data, Imagen can overcome the fragmented data-to-training loop by providing a distributed data processing layer that efficiently handles large-scale data transformations. This integration ensures that data is readily available for training models, reducing latency and improving workflow efficiency.\n\nRay Train offers a robust framework for scalable model training, addressing the GPU \"starvation\" issue. By dynamically scaling resources based on workload demands, Ray Train optimizes GPU utilization, ensuring that Imagen's video processing tasks are executed efficiently without unnecessary delays or resource wastage. Furthermore, Ray Serve facilitates the deployment of AI models at scale, overcoming the \"personalization wall\" by providing a scalable serving infrastructure that can handle personalized workloads with ease. This unified approach allows Imagen to deliver customized experiences at scale without the overhead associated with managing disparate systems.\n\n# The Future with Anyscale\n\nWith Anyscale's support, Imagen is poised to transform its operations and leverage the full potential of AI. Anyscale's expertise in deploying Ray's unified compute model will empower Imagen to streamline its infrastructure, reduce costs, and enhance performance. As Imagen integrates these advanced capabilities, it will be able to scale its personalized offerings, expand its market reach, and maintain its leadership in the post-production space. The future for Imagen is one where innovation meets efficiency, enabling the company to continue redefining the possibilities of photography post-production in the age of AI.");
+
+  // Blog toggle
+  function toggleBlog(i) {
+    const body = document.getElementById('blog-body-' + i);
+    const toggle = document.getElementById('blog-toggle-' + i);
+    const blogData = [window.__blog0, window.__blog1];
+    if (body.classList.contains('hidden')) {
+      if (!body.dataset.rendered) {
+        body.innerHTML = marked.parse(blogData[i] || '');
+        body.dataset.rendered = '1';
+        // Re-run hljs on any code blocks inside
+        body.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+      }
+      body.classList.remove('hidden');
+      toggle.textContent = 'Collapse ↑';
+    } else {
+      body.classList.add('hidden');
+      toggle.textContent = 'Read article ↓';
+    }
+  }
+
+  // Syntax highlight code examples
+  hljs.registerLanguage('python', window.hljsDefinePython || (() => ({})));
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code').forEach(el => {
+      try { hljs.highlightElement(el); } catch(e) {}
+    });
+  });
+
+  // Mermaid
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      primaryColor: '#EFF6FF',
+      primaryTextColor: '#1E40AF',
+      primaryBorderColor: '#93C5FD',
+      lineColor: '#60A5FA',
+      secondaryColor: '#F0FDF4',
+      tertiaryColor: '#FEF3C7',
+      fontSize: '14px',
+    },
+  });
+</script>
+</body>
+</html>
