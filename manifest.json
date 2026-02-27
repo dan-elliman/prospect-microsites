@@ -1,5 +1,13 @@
 [
   {
+    "slug": "whoop",
+    "companyName": "Whoop",
+    "industry": "Technology",
+    "createdBy": "Dan",
+    "createdAt": "2026-02-27T20:09:02.210Z",
+    "url": "https://dan-elliman.github.io/prospect-microsites/whoop/"
+  },
+  {
     "slug": "imagen",
     "companyName": "Imagen",
     "industry": "Technology",
