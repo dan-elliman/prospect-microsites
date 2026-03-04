@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "slug": "two-sigma",
+    "companyName": "Two Sigma",
+    "industry": "Financial Services",
+    "createdBy": "Dan",
+    "createdAt": "2026-03-04T14:34:20.105Z",
+    "url": "https://dan-elliman.github.io/prospect-microsites/two-sigma/",
+    "prospectInput": {
+      "companyName": "Two Sigma",
+      "companyDescription": "Two Sigma Investments, LP is an American hedge fund headquartered in New York City. It uses a variety of technological methods, including artificial intelligence, machine learning, and distributed computing, for its trading strategies. ",
+      "industry": "Financial Services",
+      "primaryUseCase": "Distributed backtesting + feature engineering + hyperparameter search to accelerate research iteration and improve compute utilization. ",
+      "competitorContext": "Open source ray, Likely Python-centric research stack with a mix of internal compute and cloud, plus distributed data/compute tooling (often Spark/Kubernetes/internal schedulers) supporting large-scale ETL, training, and low-latency scoring.",
+      "painPoints": [
+        "Backtest grid bottlenecks,",
+        "Python parallelism sprawl"
+      ],
+      "rayExperience": "existing"
+    }
+  }
+]
