@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Two Sigma × Anyscale</title>
+  <link rel="icon" type="image/png" href="https://dan-elliman.github.io/prospect-microsites/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .prose h1,.prose h2 { font-size:1.5rem; font-weight:700; margin:2rem 0 1rem; color:#111827; }
+    .prose h3 { font-size:1.125rem; font-weight:600; margin:1.5rem 0 0.5rem; color:#1f2937; }
+    .prose p { margin:1rem 0; }
+    .prose ul { list-style:disc; padding-left:1.5rem; margin:1rem 0; }
+    .prose li { margin:0.4rem 0; }
+    .prose strong { font-weight:600; }
+    .prose code { background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; font-size:0.85em; font-family:monospace; }
+    .prose pre { background:#0f172a; padding:1.25rem; border-radius:0.75rem; overflow-x:auto; margin:1.25rem 0; }
+    .prose pre code { background:none; padding:0; color:#e2e8f0; font-size:0.85em; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding-left:1rem; color:#6b7280; font-style:italic; margin:1.25rem 0; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="https://dan-elliman.github.io/prospect-microsites/logo.png" alt="Anyscale" class="h-7 w-auto" />
+      <span class="font-semibold text-sm text-gray-900">Two Sigma × Anyscale</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#opportunity" class="text-gray-500 hover:text-gray-900 transition-colors">Opportunity</a>
+      <a href="#deep-dives" class="text-gray-500 hover:text-gray-900 transition-colors">Deep Dives</a>
+      <a href="#architecture" class="text-gray-500 hover:text-gray-900 transition-colors">Architecture</a>
+      <a href="#code" class="text-gray-500 hover:text-gray-900 transition-colors">Code</a>
+      <a href="#next-steps" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full transition-colors font-medium">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative pt-32 pb-28 bg-gray-950 text-white overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(59,130,246,0.25),transparent)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_80%_60%,rgba(99,102,241,0.15),transparent)]"></div>
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-sm mb-8 backdrop-blur-sm">
+      <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+      Personalized for Two Sigma
+    </div>
+    <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tight mb-6 max-w-4xl">Two Sigma × Anyscale Enhance Research Efficiency</h1>
+    <p class="text-xl md:text-2xl text-blue-100/80 mb-10 max-w-2xl leading-relaxed">Experience seamless distributed backtesting, feature engineering, and hyperparameter search with managed Ray on Anyscale, letting Two Sigma focus on accelerating research without the infrastructure hassle.</p>
+    <div class="flex flex-wrap gap-4">
+      <a href="#opportunity" class="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold transition-colors">
+        Explore the opportunity →
+      </a>
+      <a href="#next-steps" class="inline-flex items-center px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-semibold transition-colors backdrop-blur-sm">
+        Book a demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- POV / Opportunity -->
+<section id="opportunity" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <div class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">The Opportunity</p>
+        <div class="prose text-gray-700 leading-relaxed" id="pov-content"></div>
+      </div>
+      <div class="space-y-8 lg:pt-8">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Primary Use Case</p>
+          <p class="font-medium text-gray-800">Distributed backtesting + feature engineering + hyperparameter search to accelerate research iteration and improve compute utilization. </p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Challenges We Solve</p>
+          <ul class="space-y-2"><li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Backtest grid bottlenecks,
+    </li>
+<li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>Python parallelism sprawl
+    </li></ul>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+          <p class="text-sm font-semibold text-blue-800 mb-1">Built on Ray</p>
+          <p class="text-xs text-blue-600 leading-relaxed">The unified open-source framework for distributed AI — data processing, training, and serving at any scale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts -->
+<section id="deep-dives" class="py-24 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Deep Dives</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Technical Guides for Your Team</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(0)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 1 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Two Sigma × Anyscale: TCO Analysis of Self-Managed vs. Managed Ray</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">A look at how Two Sigma and Anyscale could revolutionize computational efficiency by reducing operational burdens through managed Ray.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-0">Read article ↓</span>
+      <div id="blog-body-0" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(1)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 2 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Two Sigma's Engineering Team Could Build With the Ops Time Back</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">A look at how Two Sigma and Anyscale could revolutionize quantitative research by reducing ops burdens and unlocking new capabilities.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-1">Read article ↓</span>
+      <div id="blog-body-1" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section id="architecture" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Recommended Architecture</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Reference Architecture</h2>
+    <p class="text-gray-500 max-w-2xl mb-12 leading-relaxed">Two Sigma can seamlessly transition their existing Ray workloads to Anyscale without altering the underlying code. The Anyscale platform layer manages all infrastructure concerns, including autoscaling, observability, security, and upgrades, allowing researchers to focus on accelerating their research iteration and optimizing compute utilization.</p>
+    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 overflow-x-auto">
+      <div id="mermaid-diagram" class="flex justify-center min-h-[120px] items-center"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Code Examples -->
+<section id="code" class="py-24 bg-gray-950">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Getting Started</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Curated Code Examples</h2>
+    <p class="text-gray-400 mb-12 max-w-2xl leading-relaxed">
+      Production-ready templates from the Anyscale library, selected for your use case.
+      Clone and run in minutes on Anyscale.
+    </p>
+    <div class="space-y-6">
+      
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Hyperparameter Optimization with Ray Tune</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template demonstrates how Two Sigma can leverage Anyscale's managed infrastructure to streamline their Distributed backtesting, feature engineering, and hyperparameter search workflows. By transitioning from self-managed KubeRay to Anyscale, Two Sigma can accelerate research iteration and improve compute utilization, freeing their engineering team from maintaining complex Kubernetes configurations.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/intro-tune" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
+        <div>
+          <div class="px-4 py-2 bg-red-950 border-b border-gray-800">
+            <span class="text-xs font-semibold uppercase tracking-widest text-red-400">Self-managed Ray</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-yaml text-gray-300"># Two Sigma: self-managed KubeRay cluster config
+apiVersion: ray.io/v1alpha1
+kind: RayCluster
+metadata:
+  name: two-sigma-ray-cluster
+spec:
+  headGroupSpec:
+    replicas: 1
+    template:
+      spec:
+        containers:
+        - name: ray-head
+          image: rayproject/ray:2.0.0
+          resources:
+            requests:
+              cpu: &quot;4&quot;
+              memory: &quot;16Gi&quot;
+  workerGroupSpecs:
+  - replicas: 2
+    minReplicas: 2
+    maxReplicas: 10
+    template:
+      spec:
+        containers:
+        - name: ray-worker
+          image: rayproject/ray:2.0.0
+          resources:
+            requests:
+              cpu: &quot;2&quot;
+              memory: &quot;8Gi&quot;
+</code></pre>
+        </div>
+        <div>
+          <div class="px-4 py-2 bg-green-950 border-b border-gray-800 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-green-400">On Anyscale</span>
+            <span class="text-xs font-medium text-green-300 bg-green-900 px-2 py-0.5 rounded-full">All of Ray · Zero ops · Fully managed</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Two Sigma: streamlined Anyscale SDK submission
+import anyscale
+
+# same Ray code, zero infra config
+anyscale.job.submit(
+    &quot;two_sigma_backtest&quot;,
+    entry_point=&quot;backtest_script.py&quot;,
+    # Anyscale handles autoscaling
+    compute_config=&quot;default&quot;
+)
+# no YAML, no KubeRay
+</code></pre>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Ray Jobs for Production Batch Workloads</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template demonstrates how Two Sigma can streamline their distributed backtesting, feature engineering, and hyperparameter search workflows by transitioning from self-managed KubeRay clusters to Anyscale's managed platform. By using Anyscale, Two Sigma can accelerate research iterations and improve compute utilization without the need to maintain complex Kubernetes configurations.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/intro-jobs" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
+        <div>
+          <div class="px-4 py-2 bg-red-950 border-b border-gray-800">
+            <span class="text-xs font-semibold uppercase tracking-widest text-red-400">Self-managed Ray</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-yaml text-gray-300"># Two Sigma: self-managed KubeRay cluster config
+apiVersion: ray.io/v1alpha1
+kind: RayCluster
+metadata:
+  name: twosigma-ray-cluster
+spec:
+  headGroupSpec:
+    replicas: 1
+    template:
+      spec:
+        containers:
+        - name: ray-head
+          image: rayproject/ray:2.0.0
+          resources:
+            requests:
+              cpu: &quot;4&quot;
+              memory: &quot;16Gi&quot;
+  workerGroupSpecs:
+  - replicas: 2
+    minReplicas: 2
+    maxReplicas: 10
+    template:
+      spec:
+        containers:
+        - name: ray-worker
+          image: rayproject/ray:2.0.0
+          resources:
+            requests:
+              cpu: &quot;4&quot;
+              memory: &quot;16Gi&quot;
+</code></pre>
+        </div>
+        <div>
+          <div class="px-4 py-2 bg-green-950 border-b border-gray-800 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-green-400">On Anyscale</span>
+            <span class="text-xs font-medium text-green-300 bg-green-900 px-2 py-0.5 rounded-full">All of Ray · Zero ops · Fully managed</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Two Sigma: Anyscale job submission for backtesting workload
+import anyscale
+
+# same Ray code, zero infra config
+anyscale.job.submit(
+    entry_point=&quot;backtesting.py&quot;,  # no YAML, no KubeRay
+    cluster_compute=&quot;large&quot;,  # Anyscale handles autoscaling
+    cluster_env=&quot;python:3.8&quot;
+)</code></pre>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">LLM Batch Inference with Ray Data</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template showcases how Two Sigma can streamline their Distributed backtesting, feature engineering, and hyperparameter search workflows by transitioning from self-managed Ray on Kubernetes to Anyscale's managed platform. By leveraging Anyscale's SDK, Two Sigma can accelerate research iteration and enhance compute utilization without the overhead of maintaining complex infrastructure configurations.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/ray-data-llm" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
+        <div>
+          <div class="px-4 py-2 bg-red-950 border-b border-gray-800">
+            <span class="text-xs font-semibold uppercase tracking-widest text-red-400">Self-managed Ray</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-yaml text-gray-300"># Two Sigma: self-managed KubeRay cluster config
+apiVersion: ray.io/v1
+kind: RayCluster
+metadata:
+  name: two-sigma-ray-cluster
+spec:
+  headGroupSpec:
+    serviceType: ClusterIP
+    replicas: 1
+    template:
+      spec:
+        containers:
+        - name: ray-head
+          image: rayproject/ray:2.0.0
+          resources:
+            requests:
+              cpu: 4
+              memory: 16Gi
+  workerGroupSpecs:
+  - replicas: 2
+    minReplicas: 2
+    maxReplicas: 10
+    template:
+      spec:
+        containers:
+        - name: ray-worker
+          image: rayproject/ray:2.0.0
+          resources:
+            requests:
+              cpu: 2
+              memory: 8Gi</code></pre>
+        </div>
+        <div>
+          <div class="px-4 py-2 bg-green-950 border-b border-gray-800 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-green-400">On Anyscale</span>
+            <span class="text-xs font-medium text-green-300 bg-green-900 px-2 py-0.5 rounded-full">All of Ray · Zero ops · Fully managed</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Two Sigma: streamlined job submission on Anyscale
+from anyscale import AnyscaleSDK
+
+sdk = AnyscaleSDK()
+
+# same Ray code, zero infra config
+job = sdk.job.submit(
+    entry_point='two_sigma_backtest.py',  # Anyscale handles autoscaling
+    cluster_compute='default',  # no YAML, no KubeRay
+)
+print(f&quot;Job submitted: {job.id}&quot;)</code></pre>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Next Steps -->
+<section id="next-steps" class="py-24 bg-blue-600 text-white">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-4">Next Steps</p>
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">
+      Ready to accelerate Two Sigma's AI journey?
+    </h2>
+    <p class="text-xl text-blue-100 mb-14 max-w-2xl mx-auto leading-relaxed">
+      Join leading AI teams who scaled from prototype to production with Anyscale.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+      <a href="https://www.anyscale.com/contact" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Talk to an Engineer</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Get a technical walkthrough of your specific use case</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Schedule a call →</span>
+      </a>
+      <a href="https://console.anyscale.com/" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Start Free Trial</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Run your first workload on Anyscale today — no setup required</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Get started →</span>
+      </a>
+      <a href="https://www.anyscale.com/demo" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Book a Demo</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">See how teams like yours build and scale with Ray on Anyscale</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Book now →</span>
+      </a>
+    </div>
+    <p class="text-blue-200 text-sm">
+      Questions? Email <a href="mailto:sales@anyscale.com" class="underline hover:text-white">sales@anyscale.com</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  // Blog post content
+  window.__blog0 = "## Two Sigma × Anyscale: Envisioning a Future with Managed Ray\n\nIn the fast-paced world of quantitative finance, Two Sigma operates at the frontier of data science and engineering. Their sophisticated models and computations require an agile and scalable infrastructure that can support complex tasks like backtesting, machine learning, and high-speed data processing. Two Sigma currently manages open-source Ray on Kubernetes to meet these needs, but what if the operational burden of managing this infrastructure could be alleviated? This is where Anyscale's managed Ray service enters the picture.\n\n## The Ops Burden at Two Sigma: What Anyscale Could Alleviate\n\nRunning open-source Ray on Kubernetes, while powerful, introduces significant operational overhead. Two Sigma's teams are likely investing substantial time in maintaining and scaling this infrastructure. This includes dealing with backtesting grid bottlenecks and managing Python parallelism sprawl. Anyscale envisions a future where Two Sigma's engineering teams could redirect this effort toward innovation and model development rather than infrastructure management.\n\n### Total Cost of Ownership (TCO) Considerations\n\nBy transitioning to Anyscale's managed Ray, Two Sigma could potentially reduce their Total Cost of Ownership (TCO). The TCO of a self-managed system includes not just the direct costs of infrastructure, but also the indirect costs related to maintenance, scaling, and troubleshooting. Anyscale could offer a managed solution that reduces these indirect costs by handling the underlying complexity of Ray, freeing up Two Sigma's resources.\n\n### Engineering Opportunity Cost\n\nWith Anyscale managing the Ray infrastructure, Two Sigma's engineering teams could focus on what they do best: developing innovative algorithms and conducting cutting-edge research. The opportunity cost of maintaining self-managed Ray could be redirected toward enhancing the precision and performance of Two Sigma's models.\n\n## A Vision for Two Sigma and Anyscale Collaboration\n\nA partnership with Anyscale would enable Two Sigma to streamline their computational operations. With Anyscale's managed Ray, the vision extends beyond just reducing the ops burden. It could transform how Two Sigma handles large-scale ETL, training, and low-latency scoring, potentially bringing about new opportunities for optimization.\n\n### A Concrete Example: Python + Ray\n\nBelow is a Python code snippet demonstrating how Anyscale's managed Ray could simplify the execution of parallel tasks for Two Sigma's backtesting operations:\n\n```python\nimport ray\n\n# Initialize Ray on Anyscale's managed service\nray.init(address='anyscale://two-sigma-cluster')\n\n@ray.remote\ndef run_backtest(strategy, data):\n    # Simulate a strategy on the data\n    return strategy.run(data)\n\nstrategies = [Strategy1(), Strategy2(), Strategy3()]\ndata_chunks = [data_chunk_1, data_chunk_2, data_chunk_3]\n\n# Execute parallel backtests\nfutures = [run_backtest.remote(strategy, data) for strategy, data in zip(strategies, data_chunks)]\nresults = ray.get(futures)\n\n# This would enable Two Sigma to efficiently run multiple backtests in parallel, reducing bottlenecks.\n```\n\nBy leveraging Anyscale, Two Sigma could efficiently manage the distribution of computational tasks across various strategies and datasets, reducing the bottlenecks currently experienced with their self-managed setup.\n\n## Proposed Next Steps for Two Sigma and Anyscale\n\nTo realize this vision, the following next steps are proposed:\n\n1. **Feasibility Study:** Conduct a joint feasibility study to evaluate the specific benefits and ROI of transitioning to Anyscale's managed Ray.\n\n2. **Pilot Program:** Initiate a pilot program to test Anyscale's managed Ray in a controlled setting, focusing on specific use cases like backtesting and machine learning training.\n\n3. **Strategic Planning:** Develop a strategic plan for a phased rollout, ensuring minimal disruption while maximizing the benefits of the transition.\n\nBy exploring this partnership, Two Sigma and Anyscale could unlock new efficiencies and possibilities, setting a new standard for operational excellence in the world of quantitative finance.";
+    window.__blog1 = "# Two Sigma's Engineering Team Could Build With the Ops Time Back\n\nIn the fast-paced world of quantitative finance, Two Sigma stands as a beacon of innovation and data-driven decision-making. With a complex stack that includes self-managed Ray on Kubernetes, the firm handles vast amounts of data for backtesting, training, and scoring. However, the operational burdens of maintaining this infrastructure can create bottlenecks that limit the engineering team's ability to innovate. This is where a partnership with Anyscale could transform the landscape.\n\n## How Two Sigma × Anyscale Would Revolutionize Ops\n\nBy leveraging Anyscale's managed service, Two Sigma could offload the operational tasks associated with self-managing Ray. This would significantly reduce the Total Cost of Ownership (TCO) by eliminating the need for dedicated teams to handle infrastructure maintenance, scaling, and updates. Furthermore, Anyscale's platform could streamline Python parallelism challenges by offering a seamless, scalable solution.\n\n### Potential Benefits:\n- **Cost Efficiency**: Reduced TCO by offloading infrastructure management tasks to Anyscale.\n- **Increased Agility**: Engineers could focus on innovation rather than infrastructure, accelerating time-to-market for new strategies.\n- **Scalability**: Effortlessly scale to handle Two Sigma's vast data processing needs, from backtesting to real-time scoring.\n\n## Addressing Two Sigma's Backtest Grid Bottlenecks with Anyscale\n\nBacktesting is a cornerstone of Two Sigma's strategy development process, yet it is often constrained by grid bottlenecks. Anyscale's managed Ray offering could alleviate these bottlenecks by providing dynamic scaling and resource management, ensuring that computational resources are optimally utilized.\n\n### Example Python + Ray Code\n\nBelow is a Python example using Ray to parallelize a backtesting function. With Anyscale, this could run seamlessly across a distributed environment:\n\n```python\nimport ray\n\n# Initialize Ray\nray.init()\n\n@ray.remote\ndef backtest_strategy(strategy_id, data):\n    # Simulate running a backtest on historical data\n    results = run_backtest(strategy_id, data)\n    return results\n\n# List of strategy IDs and corresponding data\nstrategies = [\"strategy_1\", \"strategy_2\", \"strategy_3\"]\ndata_sets = [data_1, data_2, data_3]\n\n# Parallel execution of backtests\nfutures = [backtest_strategy.remote(s, d) for s, d in zip(strategies, data_sets)]\nresults = ray.get(futures)\n\n# This code would allow Two Sigma to efficiently parallelize backtests\n# across multiple strategies, reducing the time and computational cost.\n```\n\n## The Two Sigma × Anyscale Vision for Python Parallelism\n\nPython remains a core component of Two Sigma's research stack, but parallelism can introduce significant complexity. Anyscale's managed Ray could simplify these processes by abstracting the complexities of distributed computing. This approach would empower Two Sigma's engineers to focus on developing sophisticated models without being bogged down by infrastructure intricacies.\n\n### Key Improvements:\n- **Simplified Parallelism**: Enable seamless scaling of Python applications across distributed systems.\n- **Developer Productivity**: Free engineers from the intricacies of parallel computing, allowing more focus on algorithm development.\n- **Optimized Resource Utilization**: Automatically manage resources to ensure efficient computation.\n\n## Proposed Next Steps for Two Sigma and Anyscale\n\n1. **Proof of Concept**: Collaborate on a pilot project to demonstrate the benefits of Anyscale's managed service in a controlled environment.\n2. **Cost Analysis**: Conduct a thorough TCO analysis comparing current self-managed Ray operations with Anyscale's managed service.\n3. **Strategic Roadmap**: Develop a strategic roadmap to integrate Anyscale into Two Sigma's existing infrastructure, focusing on areas with the highest potential impact.\n\nBy exploring this potential collaboration, Two Sigma and Anyscale could redefine the boundaries of what's possible in quantitative finance, unlocking new opportunities for innovation and efficiency.";
+
+  // Render POV markdown
+  document.getElementById('pov-content').innerHTML = marked.parse("In the rapidly evolving landscape of financial services, technology-driven organizations like Two Sigma are increasingly reliant on advanced distributed computing frameworks such as Ray to power their trading strategies. Ray's flexibility and scalability make it an attractive choice for backtesting, feature engineering, and hyperparameter search operations. However, the operational complexities of managing Ray infrastructure are often underestimated. Two Sigma, with its current self-managed Ray setup, finds itself navigating these challenges, balancing innovation with the significant operational overhead.\n\n## The Hidden Cost of Two Sigma's Self-Managed Ray\n\nWhile Ray provides Two Sigma with the computational power necessary for sophisticated financial modeling, the reality of self-managing Ray infrastructure reveals a hidden cost. The operational burden of configuring KubeRay, managing cluster autoscaling, and performing Ray version upgrades stretches the team's resources thin. Debugging distributed failures becomes a time-consuming maze, and the on-call burden for infrastructure support detracts from the core mission of driving financial innovation.\n\nParticularly for Two Sigma, the pain points are acute. Backtest grid bottlenecks hinder the rapid iteration cycles necessary for competitive advantage. The Python parallelism sprawl exacerbates the complexity, leading to inefficiencies in both compute utilization and research throughput. The need to maintain internal compute resources while integrating with cloud solutions further complicates operations, leading to a fractured and resource-intensive support structure.\n\n## What Two Sigma and Anyscale Could Build Together\n\nAnyscale offers a compelling vision for Two Sigma: the full power of Ray without the operational headaches. As a fully-managed Ray platform, Anyscale allows Two Sigma to leverage the same familiar Ray APIs while eliminating the need for infrastructure management. This partnership could transform how Two Sigma approaches distributed computing, freeing engineers from the maintenance of KubeRay configurations and enabling them to focus on innovation.\n\nWith Anyscale, Two Sigma's teams would regain valuable time and resources, previously consumed by infrastructure upkeep. The seamless integration of Two Sigma's existing Python-centric research stack with Anyscale's managed services means that distributed backtesting, feature engineering, and hyperparameter search could be executed more efficiently. This could lead to faster research iteration cycles, improved compute utilization, and ultimately, a sharper competitive edge in the financial markets.\n\n## The Two Sigma × Anyscale Platform\n\nThe potential platform resulting from a Two Sigma and Anyscale collaboration would feature robust capabilities tailored to Two Sigma's specific needs. Managed autoscaling would ensure optimal resource allocation without manual intervention, while built-in observability dashboards would provide comprehensive insights into distributed workloads. Enterprise-grade security would safeguard sensitive financial data, and zero-downtime Ray version upgrades would keep operations smooth and uninterrupted.\n\nTwo Sigma's current workloads could transition to Anyscale with minimal disruption, maintaining the integrity of existing processes while enhancing performance. The handling of spot instances would optimize cost-efficiency, allowing Two Sigma to leverage cloud resources effectively without sacrificing reliability.\n\n## Two Sigma on Anyscale: What the Team Gets Back\n\nBy adopting Anyscale, Two Sigma would reclaim significant engineering hours previously devoted to operational tasks. This newfound capacity would accelerate research iteration on distributed backtesting, feature engineering, and hyperparameter search, directly impacting the speed and quality of trading strategy development. The reduced on-call burden would enhance team morale and focus, enabling engineers to explore new avenues of innovation. With infrastructure management off the table, Two Sigma could fully realize its vision of technological excellence and maintain its leadership position in the financial services industry.");
+
+  // Blog toggle
+  function toggleBlog(i) {
+    const body = document.getElementById('blog-body-' + i);
+    const toggle = document.getElementById('blog-toggle-' + i);
+    const blogData = [window.__blog0, window.__blog1];
+    if (body.classList.contains('hidden')) {
+      if (!body.dataset.rendered) {
+        body.innerHTML = marked.parse(blogData[i] || '');
+        body.dataset.rendered = '1';
+        // Re-run hljs on any code blocks inside
+        body.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+      }
+      body.classList.remove('hidden');
+      toggle.textContent = 'Collapse ↑';
+    } else {
+      body.classList.add('hidden');
+      toggle.textContent = 'Read article ↓';
+    }
+  }
+
+  // Syntax highlight code examples
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code').forEach(el => {
+      try { hljs.highlightElement(el); } catch(e) {}
+    });
+  });
+
+  // Mermaid — use JS API to avoid HTML-entity encoding issues
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    flowchart: {
+      nodeSpacing: 30,
+      rankSpacing: 40,
+      padding: 6,
+      useMaxWidth: true,
+    },
+    themeVariables: {
+      primaryColor: '#EFF6FF',
+      primaryTextColor: '#1E40AF',
+      primaryBorderColor: '#93C5FD',
+      lineColor: '#60A5FA',
+      secondaryColor: '#F0FDF4',
+      tertiaryColor: '#FEF3C7',
+      fontSize: '11px',
+      nodePadding: '4',
+    },
+  });
+  (async () => {
+    const el = document.getElementById('mermaid-diagram');
+    if (!el) return;
+    try {
+      const diagram = "flowchart TD\n  dataSources[Data Sources] --> ingestionLayer[Ingestion Layer]\n  ingestionLayer --> rayData[Ray Data]\n  rayData --> rayTrain[Ray Train]\n  rayTrain --> rayServe[Ray Serve]\n  rayServe --> modelReg[Model Registry]\n  modelReg --> inferenceEndpoint[Serving Inference Endpoint]\n  inferenceEndpoint --> downstreamConsumers[Downstream Consumers]\n  subgraph anyscalePlatform[Anyscale Platform Layer]\n    managedAutoscaling[Managed Autoscaling]\n    builtInObservability[Built-in Observability]\n    enterpriseSecurity[Enterprise Security]\n    zeroDowntimeUpgrades[Zero Downtime Upgrades]\n  end\n  rayData --> anyscalePlatform\n  rayTrain --> anyscalePlatform\n  rayServe --> anyscalePlatform";
+      const { svg } = await mermaid.render('arch', diagram);
+      el.innerHTML = svg;
+      const svgEl = el.querySelector('svg');
+      svgEl.removeAttribute('height');
+      svgEl.setAttribute('width', '100%');
+      svgEl.style.maxWidth = '100%';
+      svgEl.style.height = 'auto';
+    } catch (e) {
+      el.innerHTML = '<p style="color:#ef4444;font-size:0.875rem">Diagram rendering failed: ' + e.message + '</p>';
+    }
+  })();
+</script>
+</body>
+</html>
