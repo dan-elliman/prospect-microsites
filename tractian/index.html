@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tractian × Anyscale</title>
+  <link rel="icon" type="image/png" href="https://dan-elliman.github.io/prospect-microsites/logo.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .prose h1,.prose h2 { font-size:1.5rem; font-weight:700; margin:2rem 0 1rem; color:#111827; }
+    .prose h3 { font-size:1.125rem; font-weight:600; margin:1.5rem 0 0.5rem; color:#1f2937; }
+    .prose p { margin:1rem 0; }
+    .prose ul { list-style:disc; padding-left:1.5rem; margin:1rem 0; }
+    .prose li { margin:0.4rem 0; }
+    .prose strong { font-weight:600; }
+    .prose code { background:#f1f5f9; padding:0.1rem 0.35rem; border-radius:0.25rem; font-size:0.85em; font-family:monospace; }
+    .prose pre { background:#0f172a; padding:1.25rem; border-radius:0.75rem; overflow-x:auto; margin:1.25rem 0; }
+    .prose pre code { background:none; padding:0; color:#e2e8f0; font-size:0.85em; }
+    .prose blockquote { border-left:3px solid #3b82f6; padding-left:1rem; color:#6b7280; font-style:italic; margin:1.25rem 0; }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <img src="https://dan-elliman.github.io/prospect-microsites/logo.png" alt="Anyscale" class="h-7 w-auto" />
+      <span class="font-semibold text-sm text-gray-900">Tractian × Anyscale</span>
+    </div>
+    <div class="hidden md:flex items-center gap-6 text-sm">
+      <a href="#opportunity" class="text-gray-500 hover:text-gray-900 transition-colors">Opportunity</a>
+      <a href="#deep-dives" class="text-gray-500 hover:text-gray-900 transition-colors">Deep Dives</a>
+      <a href="#architecture" class="text-gray-500 hover:text-gray-900 transition-colors">Architecture</a>
+      <a href="#code" class="text-gray-500 hover:text-gray-900 transition-colors">Code</a>
+      <a href="#next-steps" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-full transition-colors font-medium">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative pt-32 pb-28 bg-gray-950 text-white overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(59,130,246,0.25),transparent)]"></div>
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_80%_60%,rgba(99,102,241,0.15),transparent)]"></div>
+  <div class="relative max-w-6xl mx-auto px-6">
+    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-1.5 text-sm mb-8 backdrop-blur-sm">
+      <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
+      Personalized for Tractian
+    </div>
+    <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-tight mb-6 max-w-4xl">Tractian × Anyscale: Elevating Fleet Data Efficiency</h1>
+    <p class="text-xl md:text-2xl text-blue-100/80 mb-10 max-w-2xl leading-relaxed">Together, Tractian and Anyscale pioneer high-speed distributed time-series processing and batch inference, overcoming slow backfills for seamless fleet-scale data operations.</p>
+    <div class="flex flex-wrap gap-4">
+      <a href="#opportunity" class="inline-flex items-center px-8 py-3 bg-blue-600 hover:bg-blue-500 rounded-lg font-semibold transition-colors">
+        Explore the opportunity →
+      </a>
+      <a href="#next-steps" class="inline-flex items-center px-8 py-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg font-semibold transition-colors backdrop-blur-sm">
+        Book a demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- POV / Opportunity -->
+<section id="opportunity" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <div class="lg:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">The Opportunity</p>
+        <div class="prose text-gray-700 leading-relaxed" id="pov-content"></div>
+      </div>
+      <div class="space-y-8 lg:pt-8">
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Primary Use Case</p>
+          <p class="font-medium text-gray-800">Distributed time-series feature engineering and batch inference at fleet scale (with optional distributed training/HPO).</p>
+        </div>
+        <div>
+          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Challenges We Solve</p>
+          <ul class="space-y-2"><li class="flex items-start gap-2 text-sm text-gray-600">
+      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mt-1.5 flex-shrink-0"></span>backfills too slow
+    </li></ul>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+          <p class="text-sm font-semibold text-blue-800 mb-1">Built on Ray</p>
+          <p class="text-xs text-blue-600 leading-relaxed">The unified open-source framework for distributed AI — data processing, training, and serving at any scale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Posts -->
+<section id="deep-dives" class="py-24 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Deep Dives</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12">Technical Guides for Your Team</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(0)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 1 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Tractian × Anyscale: A Technical Blueprint for Distributed Time-Series Feature Engineering and Batch Inference at Fleet Scale</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">A look at how Tractian and Anyscale could collaborate to revolutionize distributed time-series feature engineering and batch inference at fleet scale, addressing current challenges and unlocking new capabilities.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-0">Read article ↓</span>
+      <div id="blog-body-0" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+
+    <div class="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm cursor-pointer group" onclick="toggleBlog(1)">
+      <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Article 2 · 5 min read</p>
+      <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Tractian Could Solve Backfills Too Slow at Scale with Anyscale</h3>
+      <p class="text-gray-500 text-sm leading-relaxed mb-4">A look at how Tractian and Anyscale could revolutionize distributed time-series feature engineering and batch inference at fleet scale.</p>
+      <span class="text-sm font-medium text-blue-600" id="blog-toggle-1">Read article ↓</span>
+      <div id="blog-body-1" class="hidden mt-6 pt-6 border-t border-gray-100 prose text-gray-700 text-sm leading-relaxed"></div>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Architecture -->
+<section id="architecture" class="py-24 bg-white">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-4">Recommended Architecture</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Your Reference Architecture</h2>
+    <p class="text-gray-500 max-w-2xl mb-12 leading-relaxed">Tractian and Anyscale are collaboratively developing a scalable architecture leveraging Ray for distributed time-series feature engineering and batch inference at fleet scale. This architecture integrates cloud-based Kubernetes for telemetry ingestion, with Ray Data for processing, Ray Train for optional distributed training, and Ray Serve for efficient inference, addressing the challenge of slow backfills.</p>
+    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 overflow-x-auto">
+      <div id="mermaid-diagram" class="flex justify-center min-h-[120px] items-center"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Code Examples -->
+<section id="code" class="py-24 bg-gray-950">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-400 mb-4">Getting Started</p>
+    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Curated Code Examples</h2>
+    <p class="text-gray-400 mb-12 max-w-2xl leading-relaxed">
+      Production-ready templates from the Anyscale library, selected for your use case.
+      Clone and run in minutes on Anyscale.
+    </p>
+    <div class="space-y-6">
+      
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Ray Jobs for Production Batch Workloads</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template is designed specifically for Tractian's needs in distributed time-series feature engineering and batch inference at fleet scale. By leveraging Ray on Anyscale, Tractian's engineering team can eliminate cumbersome infrastructure boilerplate and seamlessly scale their workloads with improved fault tolerance and observability. This integration allows Tractian to focus on their core analytics without the overhead of manual resource management.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/intro-jobs" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
+        <div>
+          <div class="px-4 py-2 bg-red-950 border-b border-gray-800">
+            <span class="text-xs font-semibold uppercase tracking-widest text-red-400">Before Ray</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Tractian's current infrastructure for scaling time-series processing
+import multiprocessing
+import boto3
+import os
+import time
+
+# Manual state tracking
+def process_data(data_chunk):
+    try:
+        # Simulate feature engineering
+        result = some_feature_engineering(data_chunk)
+        # Manual checkpointing
+        with open(f'/tmp/checkpoint_{os.getpid()}.pkl', 'wb') as f:
+            pickle.dump(result, f)
+    except Exception as e:
+        print(f'Error processing data chunk: {e}')
+
+if __name__ == '__main__':
+    pool = multiprocessing.Pool(4)
+    try:
+        # Manual job queue management
+        data_chunks = load_data_in_chunks()
+        for chunk in data_chunks:
+            pool.apply_async(process_data, args=(chunk,))
+        pool.close()
+        pool.join()
+    except Exception as e:
+        print(f'Error in multiprocessing pool: {e}')
+        pool.terminate()</code></pre>
+        </div>
+        <div>
+          <div class="px-4 py-2 bg-green-950 border-b border-gray-800 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-green-400">With Ray</span>
+            <span class="text-xs font-medium text-green-300 bg-green-900 px-2 py-0.5 rounded-full">Parallelized · Auto-scales · Fault tolerant</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Tractian's optimized workload using Ray on Anyscale
+import ray
+
+# Ray handles state and fault tolerance
+@ray.remote
+def process_data(data_chunk):
+    # Simulate feature engineering
+    return some_feature_engineering(data_chunk)
+
+if __name__ == '__main__':
+    ray.init()  # Connect to Anyscale
+    data_chunks = load_data_in_chunks()
+    # Distribute tasks across workers
+    results = ray.get([process_data.remote(chunk) for chunk in data_chunks])
+    # Results automatically collected, no manual checkpointing
+    print('Processing complete')</code></pre>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Hyperparameter Optimization with Ray Tune</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template empowers Tractian's engineering team to leverage Ray Tune on Anyscale for distributed time-series feature engineering and batch inference at fleet scale. By transitioning from cumbersome manual scaling processes to a streamlined Ray-based approach, Tractian can efficiently manage hyperparameter optimization and distributed training, enhancing their predictive maintenance solutions.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/intro-tune" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
+        <div>
+          <div class="px-4 py-2 bg-red-950 border-b border-gray-800">
+            <span class="text-xs font-semibold uppercase tracking-widest text-red-400">Before Ray</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Tractian's current process for scaling time-series feature engineering
+import multiprocessing
+import boto3
+import subprocess
+import os
+
+def worker(data_chunk):
+    try:
+        # Process data
+        result = process_data(data_chunk)
+        # Save checkpoint manually
+        with open(f'checkpoint_{os.getpid()}.pkl', 'wb') as f:
+            pickle.dump(result, f)
+    except Exception as e:
+        # Manual error handling
+        print(f'Error processing {data_chunk}: {e}')
+        return None
+
+# Manual job queue management
+data_chunks = [chunk1, chunk2, chunk3]
+with multiprocessing.Pool(processes=4) as pool:
+    results = pool.map(worker, data_chunks)
+    pool.close()
+    pool.join()
+
+# Spinning up workers manually
+subprocess.run(['aws', 'ec2', 'run-instances', '--count', '4'])</code></pre>
+        </div>
+        <div>
+          <div class="px-4 py-2 bg-green-950 border-b border-gray-800 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-green-400">With Ray</span>
+            <span class="text-xs font-medium text-green-300 bg-green-900 px-2 py-0.5 rounded-full">Parallelized · Auto-scales · Fault tolerant</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Tractian's streamlined process with Ray Tune for distributed feature engineering
+from ray import tune
+
+# Define the objective function for hyperparameter tuning
+def objective(config):
+    # Process time-series data with given hyperparameters
+    result = process_data_with_config(config)
+    tune.report(metric=result)
+
+# Set up Ray Tune for hyperparameter optimization
+analysis = tune.run(
+    objective,
+    config={
+        'param1': tune.grid_search([1, 2, 3]),
+        'param2': tune.uniform(0.1, 1.0)
+    },
+    resources_per_trial={&quot;cpu&quot;: 2, &quot;gpu&quot;: 1}, # auto-scale resources
+    scheduler=tune.schedulers.ASHAScheduler()
+)
+
+# Automatically manages checkpoints and retries, no manual intervention needed</code></pre>
+        </div>
+      </div>
+    </div>
+  
+
+    <div class="bg-gray-900 rounded-2xl overflow-hidden border border-gray-800">
+      <div class="p-6 border-b border-gray-800">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-white text-lg mb-1">Offline Batch LLM Inference at Scale</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">This template empowers Tractian's engineering team to efficiently scale their time-series feature engineering and batch inference processes across their entire fleet using Anyscale. By leveraging Ray, Tractian can eliminate the cumbersome manual infrastructure management and focus on optimizing their machine learning workflows with enhanced scalability and resilience.</p>
+          </div>
+          <div class="flex gap-2 flex-shrink-0">
+            <a href="https://github.com/anyscale/templates/tree/main/batch-llm" target="_blank" rel="noopener"
+               class="text-xs font-medium px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition-colors">
+              GitHub ↗
+            </a>
+            
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-gray-800">
+        <div>
+          <div class="px-4 py-2 bg-red-950 border-b border-gray-800">
+            <span class="text-xs font-semibold uppercase tracking-widest text-red-400">Before Ray</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Tractian's current approach to scale time-series processing
+import multiprocessing
+import boto3
+import subprocess
+import os
+
+try:
+    def process_data(data_chunk):
+        # Simulate feature engineering
+        pass
+
+    pool = multiprocessing.Pool(processes=4)
+    results = []
+    for chunk in data_chunks:
+        try:
+            result = pool.apply_async(process_data, (chunk,))
+            results.append(result)
+        except Exception as e:
+            print(f&quot;Error processing chunk: {e}&quot;)
+            # Manual retry logic
+
+    for result in results:
+        try:
+            result.get()
+        except Exception as e:
+            print(f&quot;Error in result: {e}&quot;)
+
+    # Manual checkpointing
+    with open('checkpoint.txt', 'w') as f:
+        f.write('Checkpoint data')
+
+    # Spin up additional workers manually
+    subprocess.call(['aws', 'ec2', 'run-instances', '--image-id', 'ami-123456'])
+except Exception as e:
+    print(f&quot;Failed to complete task: {e}&quot;)</code></pre>
+        </div>
+        <div>
+          <div class="px-4 py-2 bg-green-950 border-b border-gray-800 flex items-center justify-between">
+            <span class="text-xs font-semibold uppercase tracking-widest text-green-400">With Ray</span>
+            <span class="text-xs font-medium text-green-300 bg-green-900 px-2 py-0.5 rounded-full">Parallelized · Auto-scales · Fault tolerant</span>
+          </div>
+          <pre class="p-6 overflow-x-auto text-sm"><code class="language-python text-gray-300"># Tractian's streamlined solution using Ray on Anyscale
+import ray
+from vllm import LLM
+
+ray.init()  # Initialize Ray
+
+@ray.remote
+def process_data(data_chunk):
+    # Simulate feature engineering with LLM
+    llm = LLM()  # auto-checkpoints, no manual S3 writes
+    return llm.infer(data_chunk)
+
+# Distribute tasks across multiple workers
+results = ray.get([process_data.remote(chunk) for chunk in data_chunks])
+
+# Optional: Use Ray Tune for hyperparameter optimization
+from ray import tune
+
+config = {&quot;param1&quot;: tune.grid_search([0.1, 0.2, 0.3])}
+tuner = tune.Tuner(process_data, param_space=config, tune_config=tune.TuneConfig(scheduler=tune.schedulers.ASHA()))
+results = tuner.fit()  # Hyperparameter tuning with ASHA scheduler</code></pre>
+        </div>
+      </div>
+    </div>
+  
+    </div>
+  </div>
+</section>
+
+<!-- Next Steps -->
+<section id="next-steps" class="py-24 bg-blue-600 text-white">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <p class="text-xs font-semibold uppercase tracking-widest text-blue-200 mb-4">Next Steps</p>
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">
+      Ready to accelerate Tractian's AI journey?
+    </h2>
+    <p class="text-xl text-blue-100 mb-14 max-w-2xl mx-auto leading-relaxed">
+      Join leading AI teams who scaled from prototype to production with Anyscale.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+      <a href="https://www.anyscale.com/contact" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Talk to an Engineer</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Get a technical walkthrough of your specific use case</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Schedule a call →</span>
+      </a>
+      <a href="https://console.anyscale.com/" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Start Free Trial</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">Run your first workload on Anyscale today — no setup required</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Get started →</span>
+      </a>
+      <a href="https://www.anyscale.com/demo" target="_blank" rel="noopener"
+         class="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-6 text-left transition-colors group">
+        <p class="font-semibold text-lg mb-2">Book a Demo</p>
+        <p class="text-blue-100 text-sm leading-relaxed mb-4">See how teams like yours build and scale with Ray on Anyscale</p>
+        <span class="text-sm font-semibold group-hover:translate-x-1 transition-transform inline-block">Book now →</span>
+      </a>
+    </div>
+    <p class="text-blue-200 text-sm">
+      Questions? Email <a href="mailto:sales@anyscale.com" class="underline hover:text-white">sales@anyscale.com</a>
+    </p>
+  </div>
+</section>
+
+<script>
+  // Blog post content
+  window.__blog0 = "## Introduction to the Tractian × Anyscale Vision\n\nIn an era where industrial IoT and predictive maintenance are gaining momentum, Tractian stands at the forefront with its innovative solutions. However, the challenges of distributed time-series feature engineering and batch inference at fleet scale persist. Slow backfills are a significant pain point, hindering Tractian's ability to provide real-time insights and predictive analytics. Anyscale, with its platform built on Ray, envisions a collaboration that would transform these challenges into opportunities.\n\n## How Tractian × Anyscale Would Handle Data at Scale\n\nTractian's current architecture involves a robust Python ML stack with PyTorch and scikit-learn, orchestrated on cloud Kubernetes. Streaming telemetry ingestion coupled with a historical data warehouse forms the backbone of their operations. However, the aspiration for seamless distributed feature engineering and inference remains. Anyscale could introduce a distributed computing paradigm, leveraging Ray, to handle the computational demands of processing telemetry data at fleet scale. This approach would enable Tractian to efficiently manage data ingestion, pre-processing, and feature extraction in a distributed manner, drastically reducing the time required for backfills.\n\n## Envisioning Distributed Time-Series Feature Engineering\n\nBy integrating Ray into Tractian's workflow, the team could parallelize feature engineering tasks across a cluster of nodes. This would involve distributing the workload of converting raw telemetry data into meaningful features, essential for predictive models. The following Python + Ray code example illustrates how such a distributed feature engineering task might be structured:\n\n```python\nimport ray\nimport pandas as pd\nfrom feature_engineering import extract_features\n\n# Initialize Ray\nray.init()\n\n# Sample data partitioning\ndata_partitions = [pd.DataFrame(...) for _ in range(num_partitions)]\n\n@ray.remote\ndef process_partition(partition):\n    # Perform feature extraction on each data partition\n    return extract_features(partition)\n\n# Distribute feature engineering tasks across the cluster\nfutures = [process_partition.remote(part) for part in data_partitions]\n\n# Gather results\nprocessed_data = ray.get(futures)\n\n# This setup would allow Tractian to process large volumes of telemetry data efficiently.\n```\n\n## Batch Inference at Fleet Scale with Tractian and Anyscale\n\nTractian could leverage Anyscale's capabilities to perform batch inference at a scale that aligns with their IoT fleet demands. By utilizing Ray's distributed computing framework, Tractian's models could perform inference across massive datasets concurrently, ensuring timely insights and predictions. This strategic enhancement would ensure that predictive maintenance alerts and insights are delivered with minimal latency.\n\n## Optional Distributed Training and Hyperparameter Optimization\n\nWhile feature engineering and inference are critical, model performance optimization through distributed training and hyperparameter optimization (HPO) is equally important. Anyscale could enable Tractian to perform distributed training using Ray's Tune library, optimizing model parameters across multiple configurations in parallel. This would potentially enhance model accuracy and efficiency, offering Tractian a competitive edge in predictive analytics.\n\n## Proposed Next Steps for Tractian and Anyscale\n\n1. **Proof of Concept:** Develop a proof of concept that integrates Ray into Tractian's existing data pipeline, focusing on distributed feature engineering and batch inference.\n\n2. **Performance Benchmarking:** Conduct performance benchmarking to quantify the improvements in processing time and inference latency, comparing the current system with the proposed Ray-based system.\n\n3. **Pilot Deployment:** Execute a pilot deployment within a selected segment of Tractian's IoT fleet to validate the scalability and robustness of the Ray-based solution.\n\nIn conclusion, a partnership between Tractian and Anyscale holds the potential to revolutionize how industrial IoT data is processed and analyzed, setting a new standard for predictive maintenance and operational efficiency.";
+    window.__blog1 = "## The Tractian × Anyscale Vision\n\nIn an era where industrial equipment monitoring is critical, Tractian stands at the forefront of technology innovation, enabling real-time insights into machine operations. However, to push the boundaries of efficiency, Tractian faces challenges in scaling its distributed time-series feature engineering and batch inference tasks, particularly when backfills become too slow. This is where Anyscale, with its scalable Ray framework, could offer a transformative solution.\n\n## How Tractian and Anyscale Would Handle Data at Scale\n\nTractian's current technology stack, based on Python's ML ecosystem (PyTorch/scikit-learn) running on cloud Kubernetes, excels in processing streaming telemetry data and managing historical datasets for training and batch scoring. However, the company's rapid growth and the inherent latency in processing large-scale backfills have become a bottleneck. Anyscale, with its Ray distributed computing framework, could alleviate these pain points by providing parallelization capabilities that scale effortlessly.\n\nBy leveraging Ray, Tractian could decentralize its feature engineering processes across numerous nodes, thus speeding up the computation of feature sets derived from extensive telemetry data. This approach would enable the processing of historical data batches in a fraction of the time currently required, allowing for quicker insights and more responsive machine learning models.\n\n## Tractian × Anyscale: A Framework for Distributed Training and Inference\n\nAnyscale's Ray would not only enhance feature engineering but also facilitate distributed training and hyperparameter optimization (HPO). Imagine a scenario where Tractian's models can be trained concurrently across multiple nodes in a Ray cluster, significantly reducing training time. This decentralized approach would also enable more robust HPO, ensuring that models are both efficient and accurate.\n\nHere is a concrete example of how Tractian could utilize Ray for distributed batch inference:\n\n```python\nimport ray\nfrom sklearn.externals import joblib\n\nray.init()  # Initialize Ray\n\n# A Ray remote function that processes a chunk of data\n@ray.remote\ndef process_data_chunk(data_chunk):\n    # Load the pre-trained model\n    model = joblib.load(\"/path/to/model.pkl\")\n    # Perform batch inference\n    predictions = model.predict(data_chunk)\n    return predictions\n\n# Assume `data_chunks` is a list of data pieces to process\nresults = ray.get([process_data_chunk.remote(chunk) for chunk in data_chunks])\n# Combine the results into a single dataset\ncombined_results = [item for sublist in results for item in sublist]\n```\n\n*This code snippet illustrates how Tractian could use Ray to distribute batch inference tasks across a cluster, significantly speeding up the process and reducing backfill latency.*\n\n## The Potential for Tractian and Anyscale Collaboration\n\nBy partnering with Anyscale, Tractian could realize significant advancements in its operations. This collaboration would lead to:\n\n1. **Enhanced Processing Speed:** Leveraging Ray's parallelization, Tractian could drastically reduce the time required for batch processing, enabling faster turnaround for insights and decision-making.\n2. **Scalable Infrastructure:** Anyscale's infrastructure would allow Tractian to scale its operations effortlessly, accommodating increasing volumes of telemetry data and expanding its analytics capabilities.\n3. **Optimized Model Performance:** With distributed training and effective HPO, Tractian's models would become more accurate and efficient, directly impacting performance monitoring and predictive maintenance.\n\n## Proposed Next Steps for Tractian and Anyscale\n\nIf Tractian and Anyscale decide to move forward with this vision, the following steps could be taken to initiate the partnership:\n\n1. **Proof of Concept (PoC):** Develop a PoC to evaluate the performance gains in backfill processing and model training using Ray.\n2. **Infrastructure Assessment:** Conduct a detailed assessment of Tractian's current infrastructure to identify integration points for Anyscale's Ray framework.\n3. **Pilot Deployment:** Execute a pilot deployment on a subset of Tractian’s systems to monitor performance improvements and gather feedback for iterative refinements.\n\nIn conclusion, a partnership between Tractian and Anyscale could revolutionize how industrial monitoring data is processed, paving the way for faster, more accurate insights and unlocking new levels of operational efficiency.";
+
+  // Render POV markdown
+  document.getElementById('pov-content').innerHTML = marked.parse("As the technology landscape evolves, artificial intelligence (AI) continues to redefine operational efficiency and predictive capabilities across industries. Tractian stands at the forefront of this transformation, leveraging an industrial reliability platform that combines IoT sensing with advanced software to predict equipment failures and optimize maintenance schedules. With a growing demand for more sophisticated machine learning (ML) models and real-time data processing, Tractian's journey toward enhanced AI-driven solutions positions them as a pivotal player in the future of industrial reliability.\n\n## The Tractian Scale Challenge\n\nTractian's engineering team faces a formidable challenge in scaling their infrastructure to meet the demands of their expanding data operations. As they collect increasingly large volumes of time-series data from IoT devices, the need for efficient feature engineering and batch inference becomes paramount. Currently, Tractian employs a Python ML stack utilizing PyTorch and scikit-learn, orchestrated on cloud-based Kubernetes. While this setup supports their existing operations, the pain point of slow backfills presents a significant bottleneck. The process of backward-filling historical data for training and scoring, essential for maintaining model accuracy and reliability, is hampered by this inefficiency. The challenge is clear: Tractian needs a robust, scalable solution to accelerate these processes, enabling real-time insights and more sophisticated ML capabilities.\n\n## What Tractian and Anyscale Could Build Together\n\nA partnership between Tractian and Anyscale could address these challenges through a collaborative effort, leveraging the capabilities of Ray, an open-source unified compute framework. Ray's components, such as Ray Data, Ray Train, and Ray Serve, present a promising solution to Tractian's infrastructure needs. By adopting Ray Data, Tractian could distribute their time-series feature engineering across multiple nodes, significantly reducing the time required for data processing tasks. This would enable faster and more efficient handling of telemetry data, aligning with their goal of optimizing maintenance through predictive analytics.\n\nFurthermore, Ray Train could facilitate distributed training and hyperparameter optimization (HPO), allowing Tractian to develop and refine complex models at fleet scale. With the ability to perform batch inference using Ray Serve, Tractian could deploy models rapidly and efficiently across their IoT fleet. This integration would ensure that predictive insights are delivered in real-time, enhancing their maintenance optimization capabilities. Together, Tractian and Anyscale could build a scalable, high-performance ML infrastructure that meets the demands of their growing data landscape.\n\n## The Tractian × Anyscale Architecture\n\nShould Tractian choose to partner with Anyscale, their team would operate on a cutting-edge technical design tailored to their specific needs. This architecture would involve deploying Ray on top of their existing Kubernetes infrastructure, seamlessly integrating with their Python ML stack. Ray Data would be employed to manage and process time-series data, leveraging distributed computing to enhance the efficiency of feature engineering tasks. This would be complemented by Ray Train, which would enable Tractian to execute distributed training workflows, thereby accelerating the development and optimization of ML models.\n\nRay Serve would be instrumental in facilitating batch inference at fleet scale, ensuring that Tractian's models are deployed efficiently and effectively. This architecture would also support optional distributed training and HPO, allowing Tractian to explore more complex ML models while maintaining operational efficiency. By adopting this architecture, Tractian would be well-equipped to address their current pain points and unlock new levels of predictive capability.\n\n## Tractian on Anyscale: What Becomes Possible\n\nWith Anyscale's robust framework, Tractian could achieve a transformative leap in their operational capabilities. The partnership's potential lies in enabling Tractian to perform distributed time-series feature engineering and batch inference at unprecedented speeds, directly addressing their challenge of slow backfills. This would empower Tractian to deliver real-time predictive insights, optimizing maintenance schedules and minimizing equipment downtime. Additionally, the ability to conduct distributed training and HPO would allow Tractian to enhance the accuracy and sophistication of their ML models, positioning them as a leader in industrial reliability. Embracing this partnership with Anyscale could propel Tractian into a future of unparalleled efficiency and innovation.");
+
+  // Blog toggle
+  function toggleBlog(i) {
+    const body = document.getElementById('blog-body-' + i);
+    const toggle = document.getElementById('blog-toggle-' + i);
+    const blogData = [window.__blog0, window.__blog1];
+    if (body.classList.contains('hidden')) {
+      if (!body.dataset.rendered) {
+        body.innerHTML = marked.parse(blogData[i] || '');
+        body.dataset.rendered = '1';
+        // Re-run hljs on any code blocks inside
+        body.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+      }
+      body.classList.remove('hidden');
+      toggle.textContent = 'Collapse ↑';
+    } else {
+      body.classList.add('hidden');
+      toggle.textContent = 'Read article ↓';
+    }
+  }
+
+  // Syntax highlight code examples
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('pre code').forEach(el => {
+      try { hljs.highlightElement(el); } catch(e) {}
+    });
+  });
+
+  // Mermaid — use JS API to avoid HTML-entity encoding issues
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: 'base',
+    flowchart: {
+      nodeSpacing: 30,
+      rankSpacing: 40,
+      padding: 6,
+      useMaxWidth: true,
+    },
+    themeVariables: {
+      primaryColor: '#EFF6FF',
+      primaryTextColor: '#1E40AF',
+      primaryBorderColor: '#93C5FD',
+      lineColor: '#60A5FA',
+      secondaryColor: '#F0FDF4',
+      tertiaryColor: '#FEF3C7',
+      fontSize: '11px',
+      nodePadding: '4',
+    },
+  });
+  (async () => {
+    const el = document.getElementById('mermaid-diagram');
+    if (!el) return;
+    try {
+      const diagram = "flowchart TD\n  subgraph ingestion\n    telemetryIngestion[Telemetry Ingestion]\n    warehouseLake[Warehouse Lake]\n  end\n  subgraph rayComponents\n    rayData[Ray Data]\n    rayTrain[Ray Train]\n    rayServe[Ray Serve]\n  end\n  subgraph modelManagement\n    modelReg[Model Registry]\n  end\n  subgraph inferenceEndpoint\n    batchInference[Batch Inference]\n  end\n  subgraph downstreamConsumers\n    fleetMonitoring[Fleet Monitoring]\n    analyticsDashboard[Analytics Dashboard]\n  end\n  telemetryIngestion --> rayData\n  warehouseLake --> rayData\n  rayData --> rayTrain\n  rayTrain --> modelReg\n  modelReg --> rayServe\n  rayServe --> batchInference\n  batchInference --> fleetMonitoring\n  batchInference --> analyticsDashboard";
+      const { svg } = await mermaid.render('arch', diagram);
+      el.innerHTML = svg;
+      const svgEl = el.querySelector('svg');
+      svgEl.removeAttribute('height');
+      svgEl.setAttribute('width', '100%');
+      svgEl.style.maxWidth = '100%';
+      svgEl.style.height = 'auto';
+    } catch (e) {
+      el.innerHTML = '<p style="color:#ef4444;font-size:0.875rem">Diagram rendering failed: ' + e.message + '</p>';
+    }
+  })();
+</script>
+</body>
+</html>
