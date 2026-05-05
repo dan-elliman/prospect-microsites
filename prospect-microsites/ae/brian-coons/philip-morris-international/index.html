@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philip Morris International | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Philip Morris International × LangChain</a>
+  </nav>
+  <main>
+<section class="hero">
+  <h1>Built for Philip Morris International</h1>
+  <p class="hero-sub">Regulatory compliance and scientific documentation agent — automating the synthesis, review, and submission of complex regulatory filings (e.g., FDA, WHO, local market health authority submissions) across PMI&#39;s reduced-risk product portfolio (IQOS, ZYN, etc.)</p>
+</section>
+
+
+<section class="ctas">
+  
+  <div class="cta-card">
+    <h2>See Agent Governance Built for Regulated Industries</h2>
+    <p>Get a technical deep dive into how LangChain&#39;s orchestration and observability layers enforce compliance guardrails across complex, multi-step AI workflows — purpose-built for environments where auditability isn&#39;t optional.</p>
+    <a href="#" class="btn">Book a Technical Deep Dive</a>
+  </div>
+  
+  <div class="cta-card">
+    <h2>How Leading Manufacturers Automate With LangChain</h2>
+    <p>Explore how global enterprises in regulated industries have deployed LangChain agents to streamline operations, reduce manual intervention, and maintain full oversight at scale.</p>
+    <a href="#" class="btn">View the Case Study</a>
+  </div>
+  
+  <div class="cta-card">
+    <h2>Run a Governed AI Pilot Inside PMI&#39;s Workflows</h2>
+    <p>Work directly with LangChain&#39;s solutions engineers to scope and launch a proof of concept against a real PMI use case — from commercial automation to manufacturing compliance — in weeks, not quarters.</p>
+    <a href="#" class="btn">Start a Proof of Concept</a>
+  </div>
+  
+</section>
+
+
+
+<section class="blog-list">
+  <h2>Resources</h2>
+  <ul>
+    
+    <li><a href="pmi-regulatory-ai-agents-compliance-production.html">From Pilot to Production: How PMI Can Scale Regulatory AI Agents Without Creating a Compliance Liability</a></li>
+    
+    <li><a href="pmi-langsmith-traces-operational-intelligence.html">PMI&#39;s Production Traces Are a Product Roadmap — Here&#39;s How to Read Them</a></li>
+    
+  </ul>
+</section>
+
+
+
+<section class="code-samples">
+  <h2>Sample Code</h2>
+  
+  <div class="code-block">
+    <h3>Regulatory Filing Section Synthesizer</h3>
+    <p>Uses an LCEL chain with structured Pydantic output to automatically synthesize aerosol chemistry study data into a formatted, compliance-assessed PMTA section for FDA submission — complete with scientific claims, risk disclosures, and recommended next steps for the regulatory affairs team.</p>
+    <pre><code class="python">from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
+from pydantic import BaseModel, Field
+from typing import Literal
+
+# --- Structured output schema for a regulatory filing section ---
+class RegulatorySection(BaseModel):
+    section_title: str = Field(description=&#34;Official section title per FDA PMTA format&#34;)
+    summary: str = Field(description=&#34;Executive summary of the section (2-3 sentences)&#34;)
+    scientific_claims: list[str] = Field(description=&#34;List of evidence-backed scientific claims&#34;)
+    risk_disclosures: list[str] = Field(description=&#34;Required risk disclosures for this section&#34;)
+    compliance_status: Literal[&#34;compliant&#34;, &#34;needs_review&#34;, &#34;non_compliant&#34;] = Field(
+        description=&#34;Assessed compliance status based on provided data&#34;
+    )
+    recommended_actions: list[str] = Field(description=&#34;Next steps for the regulatory affairs team&#34;)
+
+# --- PMI product context ---
+PRODUCT_NAME = &#34;IQOS ILUMA&#34;
+SUBMISSION_TYPE = &#34;Premarket Tobacco Product Application (PMTA)&#34;
+TARGET_AUTHORITY = &#34;U.S. Food and Drug Administration (FDA)&#34;
+
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0)
+parser = JsonOutputParser(pydantic_object=RegulatorySection)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are a regulatory affairs specialist at Philip Morris International. &#34;
+     &#34;Your role is to synthesize scientific study data into structured sections &#34;
+     &#34;for {submission_type} submissions to {authority}. &#34;
+     &#34;Be precise, cite evidence, and flag any compliance gaps.\n\n&#34;
+     &#34;{format_instructions}&#34;),
+    (&#34;human&#34;,
+     &#34;Product: {product_name}\n&#34;
+     &#34;Section to draft: {section_name}\n&#34;
+     &#34;Study data summary:\n{study_data}&#34;)
+])
+
+# --- LCEL chain ---
+chain = prompt | llm | parser
+
+# --- Example invocation with aerosol chemistry study data ---
+study_data = &#34;&#34;&#34;
+- IQOS ILUMA aerosol contains 95% fewer harmful chemicals vs. cigarette smoke (PMI internal study, 2022)
+- No combustion occurs; peak aerosol temp: 350°C vs. 600°C for cigarettes
+- 12-month clinical study: statistically significant reduction in BoExposure markers in adult switchers
+- Nicotine delivery profile comparable to combustible cigarettes (bioequivalence criterion met)
+&#34;&#34;&#34;
+
+result = chain.invoke({
+    &#34;submission_type&#34;: SUBMISSION_TYPE,
+    &#34;authority&#34;: TARGET_AUTHORITY,
+    &#34;product_name&#34;: PRODUCT_NAME,
+    &#34;section_name&#34;: &#34;Section 4 – Aerosol Chemistry and Toxicological Assessment&#34;,
+    &#34;study_data&#34;: study_data,
+    &#34;format_instructions&#34;: parser.get_format_instructions()
+})
+
+print(f&#34;Section: {result[&#39;section_title&#39;]}&#34;)
+print(f&#34;Compliance Status: {result[&#39;compliance_status&#39;].upper()}&#34;)
+print(f&#34;\nSummary:\n{result[&#39;summary&#39;]}&#34;)
+print(f&#34;\nScientific Claims:&#34;)
+for claim in result[&#39;scientific_claims&#39;]:
+    print(f&#34;  • {claim}&#34;)
+print(f&#34;\nRecommended Actions:&#34;)
+for action in result[&#39;recommended_actions&#39;]:
+    print(f&#34;  → {action}&#34;)
+</code></pre>
+  </div>
+  
+  <div class="code-block">
+    <h3>Multi-Market Regulatory Gap Analysis Agent</h3>
+    <p>Implements a tool-calling LangChain agent powered by Claude that autonomously fetches market-specific regulatory requirements (Japan MHLW, EU TPD2, Health Canada) and cross-checks them against PMI&#39;s product dossier content, surfacing actionable compliance gaps before submission deadlines.</p>
+    <pre><code class="python">from langchain_anthropic import ChatAnthropic
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.tools import tool
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from pydantic import BaseModel, Field
+
+# --- Tool input schemas ---
+class MarketLookupInput(BaseModel):
+    market: str = Field(description=&#34;Country or region name, e.g. &#39;Japan&#39;, &#39;EU&#39;, &#39;Canada&#39;&#34;)
+    product_category: str = Field(description=&#34;Product category: &#39;HTP&#39;, &#39;e-vapor&#39;, &#39;oral_nicotine&#39;&#34;)
+
+class ComplianceCheckInput(BaseModel):
+    regulation_text: str = Field(description=&#34;Regulatory requirement text to check&#34;)
+    dossier_section: str = Field(description=&#34;Relevant PMI dossier section content&#34;)
+
+# --- Simulated regulatory knowledge base tools ---
+@tool(args_schema=MarketLookupInput)
+def fetch_market_regulations(market: str, product_category: str) -&gt; str:
+    &#34;&#34;&#34;Retrieves current regulatory requirements for a PMI product category in a given market.&#34;&#34;&#34;
+    # In production: query a vector store or regulatory database (e.g., Pinecone + WHO/FDA docs)
+    mock_db = {
+        (&#34;Japan&#34;, &#34;HTP&#34;): &#34;Japan MHLW requires toxicological equivalence data and Japanese-language labeling. &#34;
+                          &#34;Nicotine content must be declared per stick. Annual post-market surveillance reports mandatory.&#34;,
+        (&#34;EU&#34;, &#34;HTP&#34;): &#34;EU TPD2 Article 19 requires 6-month pre-notification to national authorities. &#34;
+                       &#34;Emissions testing per ISO 20778 mandatory. Health warnings must cover 65% of packaging.&#34;,
+        (&#34;Canada&#34;, &#34;oral_nicotine&#34;): &#34;Health Canada requires pre-market notification under TVPA. &#34;
+                                     &#34;Max nicotine concentration 4mg/g. French/English bilingual labeling required.&#34;
+    }
+    return mock_db.get((market, product_category),
+                       f&#34;No cached regulation found for {product_category} in {market}. Escalate to local RA team.&#34;)
+
+@tool(args_schema=ComplianceCheckInput)
+def check_dossier_compliance(regulation_text: str, dossier_section: str) -&gt; str:
+    &#34;&#34;&#34;Compares a regulatory requirement against the current PMI submission dossier section and returns a gap analysis.&#34;&#34;&#34;
+    # In production: use semantic similarity + LLM critique chain
+    if &#34;ISO 20778&#34; in regulation_text and &#34;ISO 20778&#34; not in dossier_section:
+        return &#34;GAP IDENTIFIED: Dossier is missing ISO 20778 emissions testing data. Action required before submission.&#34;
+    if &#34;bilingual&#34; in regulation_text and &#34;French&#34; not in dossier_section:
+        return &#34;GAP IDENTIFIED: French-language labeling content absent from dossier. Localization team must be engaged.&#34;
+    return &#34;No critical gaps detected. Section appears aligned with stated regulatory requirement.&#34;
+
+# --- Agent setup ---
+llm = ChatAnthropic(model=&#34;claude-3-5-sonnet-20241022&#34;, temperature=0)
+tools = [fetch_market_regulations, check_dossier_compliance]
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are a senior regulatory affairs agent at Philip Morris International. &#34;
+     &#34;Your goal is to identify compliance gaps in PMI product dossiers across multiple markets &#34;
+     &#34;before submission to health authorities. Be methodical: look up regulations first, &#34;
+     &#34;then check the dossier against each requirement. Summarize all gaps and priorities clearly.&#34;),
+    (&#34;human&#34;, &#34;{input}&#34;),
+    (&#34;placeholder&#34;, &#34;{agent_scratchpad}&#34;)
+])
+
+agent = create_tool_calling_agent(llm, tools, prompt)
+executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# --- Run gap analysis for ZYN Canada launch ---
+zyn_dossier_excerpt = &#34;&#34;&#34;
+ZYN Nicotine Pouches – Section 3: Labeling &amp; Packaging
+Nicotine concentration: 3mg per pouch. English-language health warnings cover 65% of front panel.
+Product is tobacco-free. Intended for adult nicotine users only.
+&#34;&#34;&#34;
+
+result = executor.invoke({
+    &#34;input&#34;: f&#34;Analyze our ZYN oral nicotine dossier for Canada market readiness. &#34;
+             f&#34;Dossier excerpt: {zyn_dossier_excerpt}&#34;
+})
+
+print(&#34;\n=== REGULATORY GAP ANALYSIS REPORT ===&#34;)
+print(result[&#34;output&#34;])
+</code></pre>
+  </div>
+  
+</section>
+
+</main>
+  <footer class="footer">
+    <p>Built for Philip Morris International — powered by LangChain</p>
+  </footer>
+</body>
+</html>

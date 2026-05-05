@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>From Pilot to Production: How PMI Can Scale Regulatory AI Agents Without Creating a Compliance Liability | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Philip Morris International × LangChain</a>
+  </nav>
+  <main>
+<article class="post">
+  <header>
+    <h1>From Pilot to Production: How PMI Can Scale Regulatory AI Agents Without Creating a Compliance Liability</h1>
+    
+    <div class="tags"><span class="tag">regulatory-ai</span><span class="tag">langsmith</span><span class="tag">compliance</span><span class="tag">enterprise-governance</span></div>
+    
+  </header>
+  <div class="post-body"><p>Philip Morris International operates across more than 180 markets, each with its own health authority, submission format, and regulatory clock. For a company in the middle of one of the most ambitious product transformations in consumer goods history — pivoting an entire portfolio toward reduced-risk products like IQOS and ZYN — the volume and complexity of regulatory filings is not a background task. It is a core operational constraint.</p>
+
+<p>The question most AI teams at heavily regulated companies eventually face is not <em>can</em> we automate this workflow — it's <em>how do we prove the agent is right before it touches something that matters</em>?</p>
+
+<h2>The Eval-Driven Deployment Model</h2>
+
+<p>LangChain's approach to this problem is evaluation before deployment, not monitoring after failure. Using LangSmith's eval framework, PMI's regulatory affairs engineering team can define ground-truth datasets drawn directly from previously approved submissions — structured scientific summaries, toxicological assessments, clinical study reports — and run every new agent version against those benchmarks before it reaches a production workflow.</p>
+
+<p>This matters because regulatory submissions are not forgiving of hallucination. A single factual inconsistency in an FDA Modified Risk Tobacco Product Application (MRTPA) or a WHO Framework Convention filing can trigger a Request for Information that sets a market entry timeline back by months. Eval-gating creates a documented, auditable threshold that an agent must clear before it is authorized to draft, synthesize, or route a submission artifact.</p>
+
+<h2>Governance That Matches the Scrutiny PMI Already Lives Under</h2>
+
+<p>LangChain's enterprise governance stack was built for environments where accountability is non-negotiable. For PMI's deployment context, the relevant controls include:</p>
+
+<ul>
+  <li><strong>SOC 2 Type II certification</strong> — independently verified security and availability controls</li>
+  <li><strong>RBAC and ABAC</strong> — role and attribute-based access so a regulatory analyst in Japan sees only the market-relevant document corpus, not the global submission archive</li>
+  <li><strong>Full audit logs</strong> — every agent action, every document retrieved, every human approval captured and queryable</li>
+  <li><strong>EU data residency and self-hosted Kubernetes</strong> on AWS, GCP, or Azure — meaning PMI can keep submission data inside the jurisdictions that require it</li>
+</ul>
+
+<h2>The Confidence to Scale</h2>
+
+<p>C.H. Robinson used this same eval-driven pattern to move from a logistics automation pilot to processing 5,500 orders per day with confidence. The principle translates directly to PMI's regulatory context: define what <em>correct</em> looks like, test against it continuously, and give leadership a quantitative basis for expanding agent scope rather than an intuition.</p>
+
+<p>For a company under constant regulatory scrutiny, that quantitative basis is not a nice-to-have. It is the condition under which any serious AI deployment can actually be approved internally.</p></div>
+  <a href="index.html" class="back-link">Back to overview</a>
+</article>
+</main>
+  <footer class="footer">
+    <p>Built for Philip Morris International — powered by LangChain</p>
+  </footer>
+</body>
+</html>
