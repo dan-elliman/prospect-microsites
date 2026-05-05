@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Royal Bank of Canada | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Royal Bank of Canada × LangChain</a>
+  </nav>
+  <main>
+<section class="hero">
+  <h1>Built for Royal Bank of Canada</h1>
+  <p class="hero-sub">AI-powered wealth management and personal banking copilot for client-facing advisors and self-serve retail customers (account inquiries, financial planning guidance, product recommendations, and complex multi-step transactions)</p>
+</section>
+
+
+<section class="ctas">
+  
+  <div class="cta-card">
+    <h2>See How Production AI Agents Clear Compliance Bars</h2>
+    <p>Join a technical deep dive tailored to RBC&#39;s regulatory environment — covering audit trails, model governance, and multi-provider failover in real financial workflows.</p>
+    <a href="#" class="btn">Book a Technical Deep Dive</a>
+  </div>
+  
+  <div class="cta-card">
+    <h2>Run a Proof of Concept on Your Own Use Case</h2>
+    <p>Validate reliability, latency, and governance controls against a real RBC workload — before any commitment to production architecture.</p>
+    <a href="#" class="btn">Start Your PoC</a>
+  </div>
+  
+  <div class="cta-card">
+    <h2>Talk Architecture With an Engineer Who Knows FSI</h2>
+    <p>Get a direct conversation with a solutions engineer who has navigated model-provider risk, OSFI expectations, and enterprise AI rollouts at Tier 1 banks.</p>
+    <a href="#" class="btn">Talk to a Solutions Engineer</a>
+  </div>
+  
+</section>
+
+
+
+<section class="blog-list">
+  <h2>Resources</h2>
+  <ul>
+    
+    <li><a href="rbc-compliant-wealth-advisory-copilot-langchain.html">How RBC Can Build a Compliant Wealth Advisory Copilot Without Rebuilding Your Governance Stack</a></li>
+    
+    <li><a href="rbc-shadow-ai-fleet-governed-agent-deployment.html">Eliminating Shadow AI at RBC: How Fleet Gives Business Lines a Governed Path to Deploy Agents</a></li>
+    
+  </ul>
+</section>
+
+
+
+<section class="code-samples">
+  <h2>Sample Code</h2>
+  
+  <div class="code-block">
+    <h3>RBC Wealth Advisor Copilot – Structured Client Portfolio Analysis</h3>
+    <p>Demonstrates a structured LCEL chain that ingests a real client profile from RBC&#39;s CRM, runs it through GPT-4o, and returns a Pydantic-validated portfolio recommendation — including risk profile, product suggestions, rebalancing actions, and compliance flags — ready for an advisor to review before acting.</p>
+    <pre><code class="python">from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import PydanticOutputParser
+from pydantic import BaseModel, Field
+from typing import Literal
+
+# --- Structured output schema for portfolio recommendations ---
+class PortfolioRecommendation(BaseModel):
+    risk_profile: Literal[&#34;Conservative&#34;, &#34;Balanced&#34;, &#34;Growth&#34;, &#34;Aggressive&#34;] = Field(
+        description=&#34;Client&#39;s assessed risk profile&#34;
+    )
+    recommended_products: list[str] = Field(
+        description=&#34;List of RBC product names suited to the client&#34;
+    )
+    rebalancing_actions: list[str] = Field(
+        description=&#34;Specific rebalancing steps the advisor should discuss with the client&#34;
+    )
+    rationale: str = Field(
+        description=&#34;Plain-language explanation of the recommendation for the advisor&#34;
+    )
+    compliance_flags: list[str] = Field(
+        description=&#34;Any suitability or regulatory considerations to review before proceeding&#34;
+    )
+
+# --- Client context (would be pulled from RBC CRM / core banking in production) ---
+client_profile = {
+    &#34;name&#34;: &#34;Margaret Okonkwo&#34;,
+    &#34;age&#34;: 54,
+    &#34;annual_income&#34;: 210_000,
+    &#34;investment_horizon_years&#34;: 11,
+    &#34;current_holdings&#34;: &#34;65% equities (heavy tech), 30% fixed income, 5% cash&#34;,
+    &#34;stated_goal&#34;: &#34;Retire at 65 with $3.2M, preserve capital in final 3 years&#34;,
+    &#34;recent_life_event&#34;: &#34;Received $400K inheritance last month&#34;,
+}
+
+parser = PydanticOutputParser(pydantic_object=PortfolioRecommendation)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are an RBC wealth management AI copilot assisting a certified financial advisor. &#34;
+     &#34;Analyse the client profile and provide a structured portfolio recommendation aligned with &#34;
+     &#34;RBC InvestEase, RBC Direct Investing, and RBC Dominion Securities product suites. &#34;
+     &#34;Always surface compliance flags for advisor review.\n\n{format_instructions}&#34;),
+    (&#34;human&#34;,
+     &#34;Client profile:\n&#34;
+     &#34;Name: {name} | Age: {age} | Income: ${annual_income:,}\n&#34;
+     &#34;Investment horizon: {investment_horizon_years} years\n&#34;
+     &#34;Current holdings: {current_holdings}\n&#34;
+     &#34;Goal: {stated_goal}\n&#34;
+     &#34;Recent life event: {recent_life_event}\n\n&#34;
+     &#34;Provide a structured portfolio recommendation.&#34;),
+])
+
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0.2)
+
+# LCEL chain: prompt → LLM → structured Pydantic output
+chain = prompt | llm | parser
+
+recommendation: PortfolioRecommendation = chain.invoke({
+    **client_profile,
+    &#34;format_instructions&#34;: parser.get_format_instructions(),
+})
+
+print(f&#34;Risk Profile : {recommendation.risk_profile}&#34;)
+print(f&#34;Products     : {&#39;, &#39;.join(recommendation.recommended_products)}&#34;)
+print(f&#34;Actions      : {recommendation.rebalancing_actions}&#34;)
+print(f&#34;Rationale    : {recommendation.rationale}&#34;)
+print(f&#34;⚠ Compliance : {recommendation.compliance_flags}&#34;)
+</code></pre>
+  </div>
+  
+  <div class="code-block">
+    <h3>RBC Retail Banking Copilot – Multi-Step Conversational Agent with Account Tools</h3>
+    <p>Builds a LangGraph ReAct agent that acts as RBC&#39;s NOMI copilot, autonomously calling mock core-banking tools to retrieve account balances, check savings goal progress, and recommend relevant RBC products — all within a single natural-language customer conversation.</p>
+    <pre><code class="python">from langchain_openai import ChatOpenAI
+from langchain_core.tools import tool
+from langchain_core.messages import HumanMessage
+from langgraph.prebuilt import create_react_agent
+from datetime import date
+
+# ---------------------------------------------------------------------------
+# Mock tools – in production these call RBC&#39;s Open Banking / core APIs
+# ---------------------------------------------------------------------------
+@tool
+def get_account_summary(account_id: str) -&gt; dict:
+    &#34;&#34;&#34;Return balance and recent transaction summary for an RBC account.&#34;&#34;&#34;
+    # Simulated response from RBC core banking system
+    return {
+        &#34;account_id&#34;: account_id,
+        &#34;type&#34;: &#34;RBC Signature No Limit Banking&#34;,
+        &#34;balance_cad&#34;: 4_823.17,
+        &#34;available_cad&#34;: 4_623.17,
+        &#34;last_5_transactions&#34;: [
+            {&#34;date&#34;: &#34;2025-07-08&#34;, &#34;desc&#34;: &#34;Tim Hortons&#34;, &#34;amount&#34;: -4.75},
+            {&#34;date&#34;: &#34;2025-07-07&#34;, &#34;desc&#34;: &#34;Payroll Deposit – Maple Corp&#34;, &#34;amount&#34;: 3_200.00},
+            {&#34;date&#34;: &#34;2025-07-06&#34;, &#34;desc&#34;: &#34;RBC Visa Payment&#34;, &#34;amount&#34;: -850.00},
+            {&#34;date&#34;: &#34;2025-07-05&#34;, &#34;desc&#34;: &#34;Sobeys Grocery&#34;, &#34;amount&#34;: -112.34},
+            {&#34;date&#34;: &#34;2025-07-04&#34;, &#34;desc&#34;: &#34;Interac e-Transfer – Lena&#34;, &#34;amount&#34;: -200.00},
+        ],
+    }
+
+@tool
+def get_savings_goal_progress(goal_name: str) -&gt; dict:
+    &#34;&#34;&#34;Retrieve progress toward a named RBC NOMI savings goal.&#34;&#34;&#34;
+    goals = {
+        &#34;Emergency Fund&#34;: {&#34;target&#34;: 10_000, &#34;saved&#34;: 6_750, &#34;monthly_contribution&#34;: 500},
+        &#34;Home Down Payment&#34;: {&#34;target&#34;: 80_000, &#34;saved&#34;: 22_400, &#34;monthly_contribution&#34;: 1_200},
+    }
+    return goals.get(goal_name, {&#34;error&#34;: f&#34;No goal named &#39;{goal_name}&#39; found.&#34;})
+
+@tool
+def recommend_rbc_product(client_need: str) -&gt; str:
+    &#34;&#34;&#34;Suggest the most relevant RBC product for a stated client need.&#34;&#34;&#34;
+    need_map = {
+        &#34;high interest savings&#34;: &#34;RBC High Interest eSavings Account (currently 4.50% promotional rate)&#34;,
+        &#34;first home&#34;: &#34;RBC First Home Savings Account (FHSA) – tax-free contributions up to $8,000/yr&#34;,
+        &#34;travel rewards&#34;: &#34;RBC Avion Visa Infinite – up to 1.25 pts per $1, comprehensive travel insurance&#34;,
+        &#34;mortgage&#34;: &#34;RBC Homeline Plan – flexible HELOC + mortgage combo&#34;,
+    }
+    for keyword, product in need_map.items():
+        if keyword in client_need.lower():
+            return product
+    return &#34;Please speak with an RBC advisor for personalised product guidance.&#34;
+
+# ---------------------------------------------------------------------------
+# Agent setup using LangGraph&#39;s prebuilt ReAct agent
+# ---------------------------------------------------------------------------
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0)
+
+rbc_tools = [get_account_summary, get_savings_goal_progress, recommend_rbc_product]
+
+agent = create_react_agent(
+    model=llm,
+    tools=rbc_tools,
+    prompt=(
+        &#34;You are NOMI, RBC&#39;s friendly and knowledgeable banking copilot. &#34;
+        &#34;Help clients with account inquiries, savings goals, and product recommendations. &#34;
+        f&#34;Today&#39;s date is {date.today()}. Always confirm figures before suggesting actions.&#34;
+    ),
+)
+
+# ---------------------------------------------------------------------------
+# Simulate a self-serve retail customer session
+# ---------------------------------------------------------------------------
+user_query = (
+    &#34;Hi NOMI! Can you check my account ACC-00291847 and tell me how my Emergency Fund &#34;
+    &#34;goal is going? Also, I&#39;m thinking of buying my first home in 3 years – any RBC products &#34;
+    &#34;that could help me save faster?&#34;
+)
+
+response = agent.invoke({&#34;messages&#34;: [HumanMessage(content=user_query)]})
+print(response[&#34;messages&#34;][-1].content)
+</code></pre>
+  </div>
+  
+</section>
+
+</main>
+  <footer class="footer">
+    <p>Built for Royal Bank of Canada — powered by LangChain</p>
+  </footer>
+</body>
+</html>

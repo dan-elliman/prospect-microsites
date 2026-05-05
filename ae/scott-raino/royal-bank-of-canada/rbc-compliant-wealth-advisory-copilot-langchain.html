@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How RBC Can Build a Compliant Wealth Advisory Copilot Without Rebuilding Your Governance Stack | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Royal Bank of Canada × LangChain</a>
+  </nav>
+  <main>
+<article class="post">
+  <header>
+    <h1>How RBC Can Build a Compliant Wealth Advisory Copilot Without Rebuilding Your Governance Stack</h1>
+    
+    <div class="tags"><span class="tag">wealth management</span><span class="tag">AI governance</span><span class="tag">LangChain</span><span class="tag">financial services</span></div>
+    
+  </header>
+  <div class="post-body"><p>When a client-facing advisor at RBC asks an AI copilot to pull a client's portfolio exposure, recommend a rebalancing strategy, and flag any suitability concerns — all in a single conversation — that's not a chatbot interaction. That's a multi-step, regulated workflow with real compliance surface area. Building it correctly means your AI infrastructure has to do more than generate good answers. It has to prove it did.</p>
+
+<h2>The Governance Checklist Is Non-Negotiable</h2>
+<p>RBC's risk, compliance, and procurement teams will arrive with a checklist before any AI system is permitted to touch client data. That list typically includes SOC 2 Type II attestation, GDPR compliance, SSO integration with your existing identity provider, role-based and attribute-based access controls (RBAC/ABAC), full audit logs of every model invocation, and a contractual commitment that customer data is never used to train upstream models. These aren't negotiation points — they're table stakes.</p>
+<p>LangChain's Enterprise tier ships with all of the above, including self-hosted Kubernetes deployment on AWS, GCP, or Azure, which means client data never leaves RBC's own cloud boundary. For a bank operating under OSFI's B-10 guidelines on technology and cyber risk, that deployment model matters as much as the feature set.</p>
+
+<h2>A Concrete Architecture for the Wealth Advisory Use Case</h2>
+<p>Consider a copilot for RBC's wealth advisors that needs to:</p>
+<ul>
+  <li>Retrieve a client's current holdings and risk profile from core banking systems</li>
+  <li>Run a suitability check against current product eligibility rules</li>
+  <li>Generate a plain-language rebalancing recommendation</li>
+  <li>Route to a human advisor for approval before any transaction is initiated</li>
+</ul>
+<p>This workflow requires branching logic, external tool calls, a human-in-the-loop pause, and a recoverable state if any step fails mid-execution. LangGraph's durable, multi-agent runtime handles exactly this pattern — each node in the graph is a discrete, auditable step, and the full execution trace is captured in LangSmith, not just the final output.</p>
+
+<h2>The Audit Trail Is the Product</h2>
+<p>In a regulated environment, the audit trail isn't a logging afterthought — it's what allows your compliance team to reconstruct every decision the agent made, in sequence, when a regulator or internal audit function asks. LangSmith captures input, output, tool calls, latency, and model version at every step. That's the difference between a chat log and an auditable decision record.</p>
+<p>JPMorgan and BlackRock are already running production agent workloads on this stack. For RBC, the question isn't whether the technology is proven in financial services — it's how quickly your engineering team can move from prototype to a deployment your risk committee will actually approve.</p></div>
+  <a href="index.html" class="back-link">Back to overview</a>
+</article>
+</main>
+  <footer class="footer">
+    <p>Built for Royal Bank of Canada — powered by LangChain</p>
+  </footer>
+</body>
+</html>
