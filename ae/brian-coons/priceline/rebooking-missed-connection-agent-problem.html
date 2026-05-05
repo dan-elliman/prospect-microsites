@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Rebooking a Missed Connection Is an Agent Problem, Not a Chatbot Problem | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Priceline × LangChain</a>
+  </nav>
+  <main>
+<article class="post">
+  <header>
+    <h1>Why Rebooking a Missed Connection Is an Agent Problem, Not a Chatbot Problem</h1>
+    
+    <div class="tags"><span class="tag">LangGraph</span><span class="tag">AI Agents</span><span class="tag">Travel Tech</span><span class="tag">Customer Experience</span></div>
+    
+  </header>
+  <div class="post-body"><p>When a traveler misses a connection at O'Hare at 11 PM, they don't need a FAQ bot. They need something that can check available inventory, apply their loyalty tier, coordinate with the airline's rebooking API, surface hotel options if the next flight is morning, and confirm every change before touching their card — all in under two minutes, without handing them off to a queue.</p>
+
+<p>That's not a chatbot flow. That's a stateful, multi-step agent with real stakes at every node.</p>
+
+<h2>The Branching Problem Priceline Already Lives With</h2>
+
+<p>Priceline's customer journeys are inherently branchy. A single itinerary change can fork a dozen ways depending on fare class, cancellation policy, loyalty status, supplier availability, and whether the customer wants a refund or a credit. Traditional dialog systems force you to pre-author every branch. When the edge case hits — and in travel, the edge case is Tuesday — those systems break or escalate.</p>
+
+<p>LangGraph was designed specifically for this shape of problem. Its node-and-edge model lets engineering teams define agent logic as explicit state machines, where each step — check inventory, apply loyalty rules, call airline API, await customer confirmation — is a discrete, inspectable node. Crucially, LangGraph's <strong>durable execution</strong> means that if a supplier API times out mid-flow, the agent resumes from the last successful checkpoint rather than starting over or silently failing.</p>
+
+<h2>Human-in-the-Loop Where It Counts</h2>
+
+<p>Not every decision should be fully automated. A rebooking that crosses a certain dollar threshold, or a refund that conflicts with a supplier's policy, should pause and surface to a human agent. LangGraph's <code>interrupt()</code> primitive makes this a first-class pattern — not a bolt-on. The agent pauses, the human reviews the state, approves or overrides, and execution resumes. No context is lost. No re-prompting required.</p>
+
+<p>This is the architecture Klarna used to handle 2.5 million conversations with resolution times cut by 80%. The difference between Klarna's payment disputes and Priceline's itinerary changes is mostly domain vocabulary — the underlying agent shape is nearly identical: high volume, multi-step, high-stakes if wrong.</p>
+
+<h2>What This Looks Like in Practice</h2>
+
+<ul>
+  <li>A missed-connection flow becomes a LangGraph graph with nodes for inventory lookup, loyalty API, hotel search, and a confirmation interrupt before any charge.</li>
+  <li>Cancellation flows branch on refund eligibility, credit preference, and supplier rules — all expressed as conditional edges, not hardcoded if/else.</li>
+  <li>Every state transition is logged and replayable, giving Priceline's ops team full visibility into what the agent decided and why.</li>
+</ul>
+
+<p>The open-source foundation of LangChain means Priceline's engineering team isn't locked into a proprietary runtime. Swap the underlying model, add a new supplier API, or extend the graph — the framework stays out of the way.</p>
+
+<p>Travel is one of the few domains where the complexity of the real world lands directly on the customer at the worst possible moment. The agent infrastructure needs to match that complexity — not paper over it.</p></div>
+  <a href="index.html" class="back-link">Back to overview</a>
+</article>
+</main>
+  <footer class="footer">
+    <p>Built for Priceline — powered by LangChain</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Priceline | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Priceline × LangChain</a>
+  </nav>
+  <main>
+<section class="hero">
+  <h1>Built for Priceline</h1>
+  <p class="hero-sub">AI-powered travel booking and customer support agent that handles multi-step itinerary changes, cancellations, price matching, and account inquiries across flights, hotels, and rental cars</p>
+</section>
+
+
+<section class="ctas">
+  
+  <div class="cta-card">
+    <h2>See Agent Workflows Built for Travel Scale</h2>
+    <p>Get a technical deep dive tailored to Priceline&#39;s stack — from search and booking flows to rebooking and support automation. We&#39;ll show you exactly how AI agent orchestration holds up under real travel-volume stress.</p>
+    <a href="#" class="btn">Book a Technical Deep Dive</a>
+  </div>
+  
+  <div class="cta-card">
+    <h2>How Leading Travel Platforms Ship Auditable AI</h2>
+    <p>See how a top-tier travel brand replaced fragile LLM integrations with structured, observable agent workflows — without slowing down engineering velocity. Real architecture, real outcomes.</p>
+    <a href="#" class="btn">View the Case Study</a>
+  </div>
+  
+  <div class="cta-card">
+    <h2>Run a POC on Your Hardest Agent Problem</h2>
+    <p>Pick one workflow — rebooking, support triage, or price-change handling — and we&#39;ll help you prove out reliability and auditability in your own environment. No black boxes, no hand-waving.</p>
+    <a href="#" class="btn">Start a Proof of Concept</a>
+  </div>
+  
+</section>
+
+
+
+<section class="blog-list">
+  <h2>Resources</h2>
+  <ul>
+    
+    <li><a href="rebooking-missed-connection-agent-problem.html">Why Rebooking a Missed Connection Is an Agent Problem, Not a Chatbot Problem</a></li>
+    
+    <li><a href="ai-production-eval-loop-travel-compliance.html">Shipping AI to Production Without a Mispriced Offer Becoming a Brand Crisis</a></li>
+    
+  </ul>
+</section>
+
+
+
+<section class="code-samples">
+  <h2>Sample Code</h2>
+  
+  <div class="code-block">
+    <h3>Priceline Multi-Step Itinerary Change Agent</h3>
+    <p>A fully operational LangChain tool-calling agent that handles a realistic Priceline customer request: looking up a booking, searching alternative flights, applying a Best Price Guarantee match, and confirming the itinerary change — all in a single conversational turn.</p>
+    <pre><code class="python">from langchain_openai import ChatOpenAI
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.tools import tool
+from pydantic import BaseModel
+from typing import Literal
+
+# --- Priceline Domain Tools ---
+
+@tool
+def lookup_booking(booking_ref: str) -&gt; dict:
+    &#34;&#34;&#34;Retrieve flight, hotel, or rental car booking details by reference number.&#34;&#34;&#34;
+    # Simulated booking database response
+    return {
+        &#34;ref&#34;: booking_ref,
+        &#34;type&#34;: &#34;flight&#34;,
+        &#34;passenger&#34;: &#34;Jane Doe&#34;,
+        &#34;route&#34;: &#34;JFK → LAX&#34;,
+        &#34;departure&#34;: &#34;2025-08-10T08:00&#34;,
+        &#34;fare_class&#34;: &#34;economy&#34;,
+        &#34;price_paid&#34;: 312.50,
+        &#34;changeable&#34;: True,
+        &#34;cancellable&#34;: True,
+    }
+
+@tool
+def search_alternative_flights(origin: str, destination: str, date: str) -&gt; list[dict]:
+    &#34;&#34;&#34;Search available flights for rebooking on a new date.&#34;&#34;&#34;
+    return [
+        {&#34;flight&#34;: &#34;AA204&#34;, &#34;departure&#34;: f&#34;{date}T06:00&#34;, &#34;price&#34;: 289.00, &#34;seats&#34;: 4},
+        {&#34;flight&#34;: &#34;DL887&#34;, &#34;departure&#34;: f&#34;{date}T11:30&#34;, &#34;price&#34;: 341.00, &#34;seats&#34;: 9},
+        {&#34;flight&#34;: &#34;UA512&#34;, &#34;departure&#34;: f&#34;{date}T18:45&#34;, &#34;price&#34;: 265.00, &#34;seats&#34;: 2},
+    ]
+
+@tool
+def apply_price_match(booking_ref: str, competitor_price: float, competitor_name: str) -&gt; dict:
+    &#34;&#34;&#34;Apply Priceline&#39;s Best Price Guarantee if a lower price is found elsewhere.&#34;&#34;&#34;
+    savings = max(0, 312.50 - competitor_price)
+    return {
+        &#34;approved&#34;: savings &gt; 0,
+        &#34;original_price&#34;: 312.50,
+        &#34;matched_price&#34;: competitor_price,
+        &#34;credit_issued&#34;: round(savings, 2),
+        &#34;message&#34;: f&#34;Price match vs {competitor_name} approved. ${savings:.2f} credit applied.&#34;,
+    }
+
+@tool
+def modify_booking(booking_ref: str, new_flight: str, new_departure: str) -&gt; dict:
+    &#34;&#34;&#34;Confirm a flight change and issue an updated itinerary.&#34;&#34;&#34;
+    return {
+        &#34;status&#34;: &#34;confirmed&#34;,
+        &#34;new_flight&#34;: new_flight,
+        &#34;new_departure&#34;: new_departure,
+        &#34;confirmation_email&#34;: &#34;jane.doe@email.com&#34;,
+        &#34;change_fee&#34;: 0.00,  # waived for elite members
+    }
+
+# --- Agent Setup ---
+
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0)
+tools = [lookup_booking, search_alternative_flights, apply_price_match, modify_booking]
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are a Priceline travel support agent. Help customers manage bookings, &#34;
+     &#34;find alternatives, apply price matches, and confirm changes. &#34;
+     &#34;Always look up the booking first, then guide the customer step by step. &#34;
+     &#34;Be concise, friendly, and proactive about saving the customer money.&#34;),
+    MessagesPlaceholder(&#34;chat_history&#34;, optional=True),
+    (&#34;human&#34;, &#34;{input}&#34;),
+    MessagesPlaceholder(&#34;agent_scratchpad&#34;),
+])
+
+agent = create_tool_calling_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# --- Example: Customer wants to change flight and check price match ---
+response = agent_executor.invoke({
+    &#34;input&#34;: (
+        &#34;Hi, my booking ref is PCL-88421. I need to move my flight to August 12th. &#34;
+        &#34;Also, I saw the same JFK-LAX flight on Expedia for $265 — can you match that?&#34;
+    )
+})
+print(response[&#34;output&#34;])</code></pre>
+  </div>
+  
+  <div class="code-block">
+    <h3>Priceline Structured Cancellation &amp; Refund Classifier</h3>
+    <p>An LCEL chain that uses structured Pydantic output to power Priceline&#39;s cancellation and refund decision engine — parsing booking context, applying policy rules (free cancellation windows, carrier schedule changes, VIP exceptions), and returning a fully typed refund decision with a customer-ready message.</p>
+    <pre><code class="python">from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import PydanticOutputParser
+from pydantic import BaseModel, Field
+from typing import Literal
+
+# --- Structured Output Schema for Cancellation Decisions ---
+
+class CancellationDecision(BaseModel):
+    &#34;&#34;&#34;Structured output for Priceline&#39;s cancellation &amp; refund policy engine.&#34;&#34;&#34;
+    booking_type: Literal[&#34;flight&#34;, &#34;hotel&#34;, &#34;rental_car&#34;] = Field(
+        description=&#34;Type of travel booking being cancelled&#34;
+    )
+    refund_eligible: bool = Field(
+        description=&#34;Whether the customer qualifies for a refund under Priceline policy&#34;
+    )
+    refund_amount: float = Field(
+        description=&#34;Dollar amount to refund; 0.0 if not eligible&#34;
+    )
+    refund_method: Literal[&#34;original_payment&#34;, &#34;priceline_credit&#34;, &#34;none&#34;] = Field(
+        description=&#34;How the refund will be issued&#34;
+    )
+    cancellation_fee: float = Field(
+        description=&#34;Any applicable cancellation fee deducted from refund&#34;
+    )
+    reason_code: Literal[
+        &#34;within_free_cancellation_window&#34;,
+        &#34;non_refundable_fare&#34;,
+        &#34;schedule_change_by_carrier&#34;,
+        &#34;medical_emergency&#34;,
+        &#34;vip_goodwill_exception&#34;,
+    ] = Field(description=&#34;Policy reason driving the refund decision&#34;)
+    customer_message: str = Field(
+        description=&#34;Friendly, plain-English explanation to send to the customer&#34;
+    )
+
+# --- LCEL Chain ---
+
+parser = PydanticOutputParser(pydantic_object=CancellationDecision)
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are Priceline&#39;s cancellation policy engine. Analyze the booking context &#34;
+     &#34;and customer request, then return a structured refund decision. &#34;
+     &#34;Apply Priceline&#39;s 24-hour free cancellation rule for flights, honor carrier-initiated &#34;
+     &#34;schedule changes with full refunds, and use goodwill exceptions for VIP customers. &#34;
+     &#34;\n\n{format_instructions}&#34;),
+    (&#34;human&#34;, &#34;{cancellation_request}&#34;),
+]).partial(format_instructions=parser.get_format_instructions())
+
+cancellation_chain = prompt | llm | parser
+
+# --- Example Requests ---
+
+requests = [
+    # Scenario 1: Non-refundable fare, but carrier changed the schedule
+    {
+        &#34;cancellation_request&#34;: (
+            &#34;Booking PCL-77302: Non-refundable economy flight ORD→MIA, $198 paid. &#34;
+            &#34;Airline moved departure from 7am to 11:30pm — customer wants to cancel.&#34;
+        )
+    },
+    # Scenario 2: Hotel cancellation within free window by a VIP member
+    {
+        &#34;cancellation_request&#34;: (
+            &#34;Booking PCL-55910: Hotel reservation at Marriott Miami, $420, check-in in 3 days. &#34;
+            &#34;Customer is Priceline VIP Gold. Hotel policy allows free cancellation up to 48hrs prior. &#34;
+            &#34;Customer is requesting cancellation now.&#34;
+        )
+    },
+]
+
+for req in requests:
+    decision: CancellationDecision = cancellation_chain.invoke(req)
+    print(f&#34;Refund Eligible : {decision.refund_eligible}&#34;)
+    print(f&#34;Refund Amount   : ${decision.refund_amount:.2f} via {decision.refund_method}&#34;)
+    print(f&#34;Reason Code     : {decision.reason_code}&#34;)
+    print(f&#34;Customer Message: {decision.customer_message}&#34;)
+    print(&#34;-&#34; * 60)</code></pre>
+  </div>
+  
+</section>
+
+</main>
+  <footer class="footer">
+    <p>Built for Priceline — powered by LangChain</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athenahealth × LangChain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ──────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens ─────────────────────────────────────────────────────────────── */
+    :root {
+      --bg:            #030710;
+      --bg-card:       #0a1220;
+      --bg-card-alt:   #0f1a2e;
+      --green:         #1d3d3c;
+      --green-mid:     #2a5250;
+      --green-light:   #4a9e9b;
+      --violet:        #beb4fd;
+      --violet-dark:   #7c6ef5;
+      --violet-dim:    rgba(190,180,253,0.12);
+      --orange:        #d85522;
+      --text:          #eef2f7;
+      --text-muted:    #7b8ea8;
+      --text-dim:      #4a5568;
+      --border:        rgba(190,180,253,0.10);
+      --border-strong: rgba(190,180,253,0.28);
+      --radius:        10px;
+      --radius-lg:     18px;
+      --gradient-cta:  linear-gradient(135deg, #ff7448, #ff4848 50%, #6248ff);
+      --gradient-hero: linear-gradient(135deg, rgba(29,61,60,0.6) 0%, rgba(98,72,255,0.15) 100%);
+      --shadow-card:   0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow:   0 0 40px rgba(190,180,253,0.08);
+    }
+
+    /* ── Base ───────────────────────────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Manrope', 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--violet); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #fff; }
+    img { max-width: 100%; }
+
+    /* ── Nav ────────────────────────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(3,7,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.95rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo svg { color: var(--green-light); flex-shrink: 0; }
+    .nav-logo .nav-company {
+      color: var(--text-muted);
+      font-weight: 500;
+      padding-left: 0.5rem;
+      border-left: 1px solid var(--border-strong);
+      margin-left: 0.25rem;
+    }
+    .nav-cta {
+      font-size: 0.8rem; font-weight: 700;
+      background: var(--violet-dim);
+      color: var(--violet);
+      border: 1px solid var(--border-strong);
+      padding: 0.4rem 1rem;
+      border-radius: 99px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--violet); color: var(--bg); }
+
+    /* ── Layout ─────────────────────────────────────────────────────────────── */
+    main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+    section { margin-top: 5rem; }
+
+    /* ── Hero ───────────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 5rem 1rem 4rem;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gradient-hero);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(98,72,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      border: 1px solid rgba(74,158,155,0.35);
+      background: rgba(29,61,60,0.3);
+      padding: 0.3rem 0.85rem;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 .gradient-text {
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--gradient-cta);
+      color: #fff;
+      font-weight: 700; font-size: 0.875rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 99px;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(98,72,255,0.35);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--violet-dim);
+      color: var(--violet);
+      font-weight: 700; font-size: 0.875rem;
+      border: 1px solid var(--border-strong);
+      padding: 0.65rem 1.5rem;
+      border-radius: 99px;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { background: var(--violet); color: var(--bg); transform: translateY(-1px); }
+
+    /* ── Section headings ───────────────────────────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-size: 1.65rem; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 0.95rem;
+      margin-bottom: 2rem; max-width: 540px;
+    }
+
+    /* ── CTA Cards ──────────────────────────────────────────────────────────── */
+    .ctas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .cta-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient-cta);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .cta-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+    }
+    .cta-card:hover::before { opacity: 1; }
+    .cta-card-icon {
+      width: 40px; height: 40px;
+      background: var(--violet-dim);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--violet);
+      font-size: 1.1rem;
+    }
+    .cta-card h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.5rem; color: var(--text);
+    }
+    .cta-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; }
+    .cta-card .btn-link {
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--violet);
+      display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .cta-card .btn-link:hover { color: #fff; }
+
+    /* ── Blog / Resources ───────────────────────────────────────────────────── */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .post-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+    .post-card-tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--green-light);
+      margin-bottom: 0.75rem;
+    }
+    .post-card h3 {
+      font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem; flex: 1;
+    }
+    .post-card .read-link {
+      margin-top: 1rem; font-size: 0.8rem; font-weight: 700;
+      color: var(--violet);
+      display: inline-flex; align-items: center; gap: 0.25rem;
+    }
+
+    /* ── Code Samples ───────────────────────────────────────────────────────── */
+    .code-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card-alt);
+    }
+    .code-block-title { font-size: 0.875rem; font-weight: 700; color: var(--text); }
+    .code-block-lang {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--violet);
+      background: var(--violet-dim); padding: 0.2rem 0.6rem;
+      border-radius: 99px; border: 1px solid var(--border-strong);
+    }
+    .code-block-desc {
+      padding: 0.85rem 1.25rem;
+      font-size: 0.8rem; color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      margin: 0; padding: 1.25rem;
+      background: #010509;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.8rem; line-height: 1.7;
+      color: #c9d1d9;
+    }
+    pre code { background: none; padding: 0; }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85em;
+      background: var(--violet-dim);
+      color: var(--violet);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+
+    /* ── Blog post page ─────────────────────────────────────────────────────── */
+    .post-page { padding: 3rem 0; }
+    .post-page .post-meta {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .post-page .tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--violet-dim); color: var(--violet);
+      border: 1px solid var(--border-strong);
+      padding: 0.25rem 0.65rem; border-radius: 99px;
+    }
+    .post-page h1 {
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      font-weight: 800; letter-spacing: -0.025em;
+      margin-bottom: 2rem;
+      line-height: 1.25;
+    }
+    .post-body {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      font-size: 0.975rem; line-height: 1.85;
+      color: #c5d0de;
+    }
+    .post-body p { margin-bottom: 1.25rem; }
+    .post-body h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 2rem 0 0.75rem; }
+    .post-body h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin: 1.5rem 0 0.5rem; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .post-body li { margin-bottom: 0.35rem; }
+    .post-body strong { color: var(--text); font-weight: 700; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--violet); }
+
+    /* ── Divider ────────────────────────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0 0;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────────────── */
+    .footer {
+      margin-top: 5rem;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--text-dim);
+    }
+    .footer a { color: var(--text-muted); }
+    .footer a:hover { color: var(--violet); }
+    .footer-brand {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-weight: 700; color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      LangChain
+      <span class="nav-company">Athenahealth</span>
+    </a>
+    <a href="https://langchain.com" target="_blank" class="nav-cta">Get Started →</a>
+  </nav>
+
+  <main>
+
+
+<div class="hero">
+  <div class="hero-eyebrow">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+    Built exclusively for Athenahealth
+  </div>
+  <h1>Built for Athenahealth<br><span class="gradient-text">with LangChain</span></h1>
+  <p class="hero-sub">AI-powered clinical documentation and prior authorization automation agent for healthcare providers</p>
+  <div class="hero-actions">
+    <a href="https://langchain.com/contact" target="_blank" class="btn-primary">Talk to our team →</a>
+    
+    <a href="#resources" class="btn-secondary">Explore resources</a>
+    
+  </div>
+</div>
+
+
+
+<section>
+  <p class="section-label">Why LangChain</p>
+  <h2 class="section-title">What we can build together</h2>
+  <p class="section-sub">Athenahealth can ship HIPAA-compliant clinical and administrative AI agents with the same rigor it applies to its EHR platform — without rebuilding its stack or betting on a single model provider.</p>
+  <div class="ctas-grid">
+    
+    <div class="cta-card">
+      <div class="cta-card-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+        </svg>
+      </div>
+      <h3>See How It Fits Your Existing Stack</h3>
+      <p>Get a technical walkthrough tailored to Athenahealth&#39;s architecture — covering model orchestration, HIPAA compliance guardrails, and EHR integration patterns. No rip-and-replace required.</p>
+      <a href="#" target="_blank" class="btn-link">
+        Book a Technical Deep Dive <span>→</span>
+      </a>
+    </div>
+    
+    <div class="cta-card">
+      <div class="cta-card-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+        </svg>
+      </div>
+      <h3>Run a POC in Your Own Environment</h3>
+      <p>Validate HIPAA-compliant AI agent deployment against a real clinical or administrative workflow in weeks, not quarters — without locking into a single model provider.</p>
+      <a href="#" target="_blank" class="btn-link">
+        Start a Proof of Concept <span>→</span>
+      </a>
+    </div>
+    
+    <div class="cta-card">
+      <div class="cta-card-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+        </svg>
+      </div>
+      <h3>Talk to an Engineer Who Gets Healthcare AI</h3>
+      <p>Skip the sales pitch. Our solutions engineers have worked through the compliance, latency, and interoperability tradeoffs that matter to teams building on top of EHR platforms like Athenahealth.</p>
+      <a href="#" target="_blank" class="btn-link">
+        Talk to a Solutions Engineer <span>→</span>
+      </a>
+    </div>
+    
+  </div>
+</section>
+
+
+
+
+<section id="resources">
+  <p class="section-label">Resources</p>
+  <h2 class="section-title">Built for your use case</h2>
+  <p class="section-sub">In-depth guides written specifically for Athenahealth's context and goals.</p>
+  <div class="posts-grid">
+    
+    <a href="prior-auth-automation-durable-execution-langgraph.html" class="post-card">
+      <span class="post-card-tag">Guide</span>
+      <h3>Why Prior Auth Automation Demands Durable Execution, Not Just a Chatbot</h3>
+      <span class="read-link">Read more →</span>
+    </a>
+    
+    <a href="eval-driven-clinical-ai-agents-langsmith.html" class="post-card">
+      <span class="post-card-tag">Guide</span>
+      <h3>Eval-Driven AI: How Athenahealth Can Scale Clinical Agents Beyond the Pilot</h3>
+      <span class="read-link">Read more →</span>
+    </a>
+    
+  </div>
+</section>
+
+
+
+
+<section id="code">
+  <p class="section-label">Sample Code</p>
+  <h2 class="section-title">See it in action</h2>
+  <p class="section-sub">Production-ready patterns your team can adapt today.</p>
+  
+  <div class="code-block">
+    <div class="code-block-header">
+      <span class="code-block-title">AI Clinical Documentation Generator</span>
+      <span class="code-block-lang">python</span>
+    </div>
+    
+    <div class="code-block-desc">Converts a raw provider encounter transcript into a structured SOAP note with ICD-10 and CPT billing codes using LangChain&#39;s structured output and LCEL pipeline, ready for EHR integration.</div>
+    
+    <pre><code>from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import JsonOutputParser
+from pydantic import BaseModel, Field
+from typing import Optional
+
+# Structured output schema for a clinical SOAP note
+class SOAPNote(BaseModel):
+    subjective: str = Field(description=&#34;Patient-reported symptoms and chief complaint&#34;)
+    objective: str = Field(description=&#34;Clinician observations, vitals, and exam findings&#34;)
+    assessment: str = Field(description=&#34;Diagnosis or differential diagnoses&#34;)
+    plan: str = Field(description=&#34;Treatment plan, medications, and follow-up&#34;)
+    icd10_codes: list[str] = Field(description=&#34;Relevant ICD-10 diagnosis codes&#34;)
+    cpt_codes: list[str] = Field(description=&#34;Relevant CPT procedure codes for billing&#34;)
+
+# Raw encounter transcript from provider dictation or EHR input
+encounter_transcript = &#34;&#34;&#34;
+Patient is a 58-year-old male presenting with a 3-week history of persistent dry cough,
+shortness of breath on exertion, and mild chest tightness. No fever or chills. 
+History of hypertension managed with lisinopril. BP 138/88, HR 82, SpO2 97% on room air.
+Lung auscultation reveals mild expiratory wheezing bilaterally. CXR ordered, 
+prescribing albuterol inhaler PRN and scheduling pulmonology referral.
+&#34;&#34;&#34;
+
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are a clinical documentation specialist for an athenahealth-integrated EHR. &#34;
+     &#34;Convert provider encounter notes into structured SOAP format with accurate &#34;
+     &#34;ICD-10 and CPT codes for billing compliance.&#34;),
+    (&#34;human&#34;, &#34;Encounter transcript:\n{transcript}\n\nGenerate a structured SOAP note with billing codes.&#34;)
+])
+
+# LCEL chain: prompt -&gt; LLM -&gt; structured JSON output
+documentation_chain = prompt | llm.with_structured_output(SOAPNote)
+
+soap_note = documentation_chain.invoke({&#34;transcript&#34;: encounter_transcript})
+
+print(&#34;=== Generated SOAP Note ===&#34;)
+print(f&#34;S: {soap_note.subjective}&#34;)
+print(f&#34;O: {soap_note.objective}&#34;)
+print(f&#34;A: {soap_note.assessment}&#34;)
+print(f&#34;P: {soap_note.plan}&#34;)
+print(f&#34;ICD-10 Codes: {&#39;, &#39;.join(soap_note.icd10_codes)}&#34;)
+print(f&#34;CPT Codes:    {&#39;, &#39;.join(soap_note.cpt_codes)}&#34;)
+</code></pre>
+  </div>
+  
+  <div class="code-block">
+    <div class="code-block-header">
+      <span class="code-block-title">Prior Authorization Decision Support Agent</span>
+      <span class="code-block-lang">python</span>
+    </div>
+    
+    <div class="code-block-desc">An agentic prior authorization workflow that uses tool-calling to check payer policies, validate clinical necessity criteria, and auto-draft PA submission letters, reducing administrative burden on clinical staff.</div>
+    
+    <pre><code>from langchain_anthropic import ChatAnthropic
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.tools import tool
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from pydantic import BaseModel, Field
+
+# Simulated payer policy and formulary lookups (would call athenahealth APIs in production)
+@tool
+def lookup_payer_policy(payer_id: str, procedure_code: str) -&gt; str:
+    &#34;&#34;&#34;Look up a payer&#39;s prior authorization requirements for a given procedure code.&#34;&#34;&#34;
+    mock_policies = {
+        (&#34;BCBS-MA&#34;, &#34;27447&#34;): &#34;PA required. Must document conservative therapy (PT x6 weeks) and X-ray evidence of OA.&#34;,
+        (&#34;AETNA&#34;, &#34;70553&#34;): &#34;PA required. Indicate clinical indication and prior imaging results.&#34;,
+    }
+    return mock_policies.get((payer_id, procedure_code), &#34;No PA required per current payer policy.&#34;)
+
+@tool
+def check_clinical_criteria(diagnosis_code: str, procedure_code: str) -&gt; str:
+    &#34;&#34;&#34;Check evidence-based clinical criteria and medical necessity guidelines for a procedure.&#34;&#34;&#34;
+    mock_criteria = {
+        (&#34;M17.11&#34;, &#34;27447&#34;): &#34;Criteria met if: BMI &lt; 40, conservative treatment failed, functional limitation documented.&#34;,
+    }
+    return mock_criteria.get((diagnosis_code, procedure_code), &#34;Consult payer LCD/NCD guidelines for specific criteria.&#34;)
+
+@tool
+def draft_pa_letter(patient_name: str, procedure: str, clinical_summary: str) -&gt; str:
+    &#34;&#34;&#34;Draft a prior authorization request letter for submission to the payer.&#34;&#34;&#34;
+    return (
+        f&#34;Dear Medical Director,\n\nWe are requesting prior authorization for {procedure} &#34;
+        f&#34;for patient {patient_name}. Clinical summary: {clinical_summary}\n\n&#34;
+        f&#34;Please find supporting documentation attached.\n\nSincerely,\nProvider&#34;
+    )
+
+tools = [lookup_payer_policy, check_clinical_criteria, draft_pa_letter]
+
+llm = ChatAnthropic(model=&#34;claude-3-5-sonnet-20241022&#34;, temperature=0)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;,
+     &#34;You are a prior authorization specialist at an athenahealth-powered medical practice. &#34;
+     &#34;Use the available tools to assess PA requirements, verify clinical criteria, &#34;
+     &#34;and draft submission letters to minimize claim denials.&#34;),
+    (&#34;human&#34;, &#34;{input}&#34;),
+    (&#34;placeholder&#34;, &#34;{agent_scratchpad}&#34;),
+])
+
+agent = create_tool_calling_agent(llm, tools, prompt)
+pa_agent = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# Realistic PA request scenario
+pa_request = (
+    &#34;Patient: Jane Doe | Payer: BCBS-MA | Procedure: 27447 (Total Knee Arthroplasty) | &#34;
+    &#34;Diagnosis: M17.11 (Primary OA, right knee). She has completed 8 weeks of PT with &#34;
+    &#34;no improvement and X-rays confirm severe joint space narrowing. Please assess PA &#34;
+    &#34;requirements, verify she meets clinical criteria, and draft a PA request letter.&#34;
+)
+
+result = pa_agent.invoke({&#34;input&#34;: pa_request})
+print(&#34;\n=== PA Agent Output ===&#34;)
+print(result[&#34;output&#34;])
+</code></pre>
+  </div>
+  
+
+
+</main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      LangChain
+    </div>
+    <p>Built for Athenahealth — <a href="https://langchain.com" target="_blank">langchain.com</a></p>
+  </footer>
+</body>
+</html>

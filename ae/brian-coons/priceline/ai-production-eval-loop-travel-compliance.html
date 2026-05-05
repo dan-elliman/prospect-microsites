@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipping AI to Production Without a Mispriced Offer Becoming a Brand Crisis | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Priceline × LangChain</a>
+  </nav>
+  <main>
+<article class="post">
+  <header>
+    <h1>Shipping AI to Production Without a Mispriced Offer Becoming a Brand Crisis</h1>
+    
+    <div class="tags"><span class="tag">LangSmith</span><span class="tag">AI Evaluation</span><span class="tag">MLOps</span><span class="tag">Travel Commerce</span></div>
+    
+  </header>
+  <div class="post-body"><p>In travel commerce, a bad AI output isn't just a UX bug. A mispriced offer that a customer screenshots and shares, a refund that processes incorrectly against a supplier agreement, a loyalty redemption that violates program terms — these are compliance events and brand risks. The eval loop that catches them before they ship isn't optional; it's the product.</p>
+
+<h2>The Problem With Vibe-Testing Agents</h2>
+
+<p>Most teams shipping AI features today are effectively vibe-testing: a few engineers run the agent through a handful of scenarios, it looks good, it ships. This works until it doesn't — and in a high-volume booking environment like Priceline's, "until it doesn't" can mean thousands of affected transactions before anyone notices the pattern.</p>
+
+<p>The root issue is that LLM-based agents are non-deterministic. The same input can produce different outputs across model versions, prompt changes, or even temperature drift. You can't unit-test your way out of this. You need an eval loop that runs continuously against real production traces.</p>
+
+<h2>LangSmith's Eval Loop in a Travel Context</h2>
+
+<p>LangSmith provides exactly this. Every agent conversation — a price-match request, a cancellation flow, a loyalty inquiry — generates a trace. Those traces become a living dataset. When Priceline's team wants to change the prompt handling fare rules, or swap the underlying model from one provider to another, they run the new version against that dataset before a single customer sees it.</p>
+
+<p>Concretely, this means:</p>
+
+<ul>
+  <li><strong>Regression testing on real edge cases.</strong> That weird multi-city itinerary with a lap infant and a codeshare segment that broke last quarter? It's in the eval set now. Every future change runs against it.</li>
+  <li><strong>Automated scoring on business-critical outputs.</strong> Did the agent correctly apply the loyalty tier discount? Did it surface the refund-to-original-payment option before the travel credit? Evaluators can be LLM-as-judge or deterministic rules — LangSmith supports both.</li>
+  <li><strong>Model-swap safety.</strong> When Priceline's platform team evaluates moving from one LLM provider to another for cost or capability reasons, LangSmith's framework-agnostic observability — built on OpenTelemetry — means the eval harness doesn't change, only the model under test does.</li>
+</ul>
+
+<h2>Beyond Engineering: Agents for Revenue and Partner Ops</h2>
+
+<p>LangSmith Fleet extends this governed infrastructure to non-engineering teams. Revenue management running competitive fare monitoring agents, partner ops generating supplier briefings, marketing summarizing demand forecasts — all built on the same RBAC and audit-log layer that IT will approve. The same eval discipline that protects customer-facing flows applies internally.</p>
+
+<p>The practical upside: Priceline's VP of Engineering doesn't have to choose between moving fast and maintaining the audit trail that a financial-services-adjacent environment requires. The eval loop is the mechanism that makes both possible — catch the mispriced offer in staging, not in production, and ship with confidence instead of crossed fingers.</p></div>
+  <a href="index.html" class="back-link">Back to overview</a>
+</article>
+</main>
+  <footer class="footer">
+    <p>Built for Priceline — powered by LangChain</p>
+  </footer>
+</body>
+</html>
