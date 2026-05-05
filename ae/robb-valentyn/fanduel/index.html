@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FanDuel × LangChain</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ──────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens ─────────────────────────────────────────────────────────────── */
+    :root {
+      --bg:            #030710;
+      --bg-card:       #0a1220;
+      --bg-card-alt:   #0f1a2e;
+      --green:         #1d3d3c;
+      --green-mid:     #2a5250;
+      --green-light:   #4a9e9b;
+      --violet:        #beb4fd;
+      --violet-dark:   #7c6ef5;
+      --violet-dim:    rgba(190,180,253,0.12);
+      --orange:        #d85522;
+      --text:          #eef2f7;
+      --text-muted:    #7b8ea8;
+      --text-dim:      #4a5568;
+      --border:        rgba(190,180,253,0.10);
+      --border-strong: rgba(190,180,253,0.28);
+      --radius:        10px;
+      --radius-lg:     18px;
+      --gradient-cta:  linear-gradient(135deg, #ff7448, #ff4848 50%, #6248ff);
+      --gradient-hero: linear-gradient(135deg, rgba(29,61,60,0.6) 0%, rgba(98,72,255,0.15) 100%);
+      --shadow-card:   0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow:   0 0 40px rgba(190,180,253,0.08);
+    }
+
+    /* ── Base ───────────────────────────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Manrope', 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--violet); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #fff; }
+    img { max-width: 100%; }
+
+    /* ── Nav ────────────────────────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(3,7,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.95rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo svg { color: var(--green-light); flex-shrink: 0; }
+    .nav-logo .nav-company {
+      color: var(--text-muted);
+      font-weight: 500;
+      padding-left: 0.5rem;
+      border-left: 1px solid var(--border-strong);
+      margin-left: 0.25rem;
+    }
+    .nav-cta {
+      font-size: 0.8rem; font-weight: 700;
+      background: var(--violet-dim);
+      color: var(--violet);
+      border: 1px solid var(--border-strong);
+      padding: 0.4rem 1rem;
+      border-radius: 99px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--violet); color: var(--bg); }
+
+    /* ── Layout ─────────────────────────────────────────────────────────────── */
+    main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+    section { margin-top: 5rem; }
+
+    /* ── Hero ───────────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 5rem 1rem 4rem;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gradient-hero);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(98,72,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      border: 1px solid rgba(74,158,155,0.35);
+      background: rgba(29,61,60,0.3);
+      padding: 0.3rem 0.85rem;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 .gradient-text {
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--gradient-cta);
+      color: #fff;
+      font-weight: 700; font-size: 0.875rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 99px;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(98,72,255,0.35);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--violet-dim);
+      color: var(--violet);
+      font-weight: 700; font-size: 0.875rem;
+      border: 1px solid var(--border-strong);
+      padding: 0.65rem 1.5rem;
+      border-radius: 99px;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { background: var(--violet); color: var(--bg); transform: translateY(-1px); }
+
+    /* ── Section headings ───────────────────────────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-size: 1.65rem; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 0.95rem;
+      margin-bottom: 2rem; max-width: 540px;
+    }
+
+    /* ── CTA Cards ──────────────────────────────────────────────────────────── */
+    .ctas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .cta-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient-cta);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .cta-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+    }
+    .cta-card:hover::before { opacity: 1; }
+    .cta-card-icon {
+      width: 40px; height: 40px;
+      background: var(--violet-dim);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--violet);
+      font-size: 1.1rem;
+    }
+    .cta-card h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.5rem; color: var(--text);
+    }
+    .cta-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; }
+    .cta-card .btn-link {
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--violet);
+      display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .cta-card .btn-link:hover { color: #fff; }
+
+    /* ── Blog / Resources ───────────────────────────────────────────────────── */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .post-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+    .post-card-tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--green-light);
+      margin-bottom: 0.75rem;
+    }
+    .post-card h3 {
+      font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem; flex: 1;
+    }
+    .post-card .read-link {
+      margin-top: 1rem; font-size: 0.8rem; font-weight: 700;
+      color: var(--violet);
+      display: inline-flex; align-items: center; gap: 0.25rem;
+    }
+
+    /* ── Code Samples ───────────────────────────────────────────────────────── */
+    .code-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card-alt);
+    }
+    .code-block-title { font-size: 0.875rem; font-weight: 700; color: var(--text); }
+    .code-block-lang {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--violet);
+      background: var(--violet-dim); padding: 0.2rem 0.6rem;
+      border-radius: 99px; border: 1px solid var(--border-strong);
+    }
+    .code-block-desc {
+      padding: 0.85rem 1.25rem;
+      font-size: 0.8rem; color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      margin: 0; padding: 1.25rem;
+      background: #010509;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.8rem; line-height: 1.7;
+      color: #c9d1d9;
+    }
+    pre code { background: none; padding: 0; }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85em;
+      background: var(--violet-dim);
+      color: var(--violet);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+
+    /* ── Blog post page ─────────────────────────────────────────────────────── */
+    .post-page { padding: 3rem 0; }
+    .post-page .post-meta {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .post-page .tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--violet-dim); color: var(--violet);
+      border: 1px solid var(--border-strong);
+      padding: 0.25rem 0.65rem; border-radius: 99px;
+    }
+    .post-page h1 {
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      font-weight: 800; letter-spacing: -0.025em;
+      margin-bottom: 2rem;
+      line-height: 1.25;
+    }
+    .post-body {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      font-size: 0.975rem; line-height: 1.85;
+      color: #c5d0de;
+    }
+    .post-body p { margin-bottom: 1.25rem; }
+    .post-body h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 2rem 0 0.75rem; }
+    .post-body h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin: 1.5rem 0 0.5rem; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .post-body li { margin-bottom: 0.35rem; }
+    .post-body strong { color: var(--text); font-weight: 700; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--violet); }
+
+    /* ── Divider ────────────────────────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0 0;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────────────── */
+    .footer {
+      margin-top: 5rem;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--text-dim);
+    }
+    .footer a { color: var(--text-muted); }
+    .footer a:hover { color: var(--violet); }
+    .footer-brand {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-weight: 700; color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      LangChain
+      <span class="nav-company">FanDuel</span>
+    </a>
+    <a href="https://langchain.com" target="_blank" class="nav-cta">Get Started →</a>
+  </nav>
+
+  <main>
+
+
+<div class="hero">
+  <div class="hero-eyebrow">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+    </svg>
+    Built exclusively for FanDuel
+  </div>
+  <h1>Built for FanDuel<br><span class="gradient-text">with LangChain</span></h1>
+  <p class="hero-sub">AI-powered sports betting customer support and account management agent (handling bet inquiries, deposit/withdrawal issues, responsible gambling interventions, and dispute resolution at scale)</p>
+  <div class="hero-actions">
+    <a href="https://langchain.com/contact" target="_blank" class="btn-primary">Talk to our team →</a>
+    
+    <a href="#resources" class="btn-secondary">Explore resources</a>
+    
+  </div>
+</div>
+
+
+
+<section>
+  <p class="section-label">Why LangChain</p>
+  <h2 class="section-title">What we can build together</h2>
+  <p class="section-sub">FanDuel can turn real-time sports betting complexity into a competitive moat — with AI agents that handle customer support, personalization, and ops at Klarna-scale reliability.</p>
+  <div class="ctas-grid">
+    
+    <div class="cta-card">
+      <div class="cta-card-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+        </svg>
+      </div>
+      <h3>See How Klarna-Scale AI Handles Peak Traffic</h3>
+      <p>Get a technical deep dive into the agent architecture powering millions of real-time interactions — and see exactly how it maps to FanDuel&#39;s live betting infrastructure.</p>
+      <a href="#" target="_blank" class="btn-link">
+        Book a Technical Deep Dive <span>→</span>
+      </a>
+    </div>
+    
+    <div class="cta-card">
+      <div class="cta-card-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+        </svg>
+      </div>
+      <h3>Proof of Concept Built Around Your Stack</h3>
+      <p>Work directly with our solutions engineers to run a scoped POC on FanDuel&#39;s real use cases — from in-game support surges to personalized bet recommendations — with measurable outcomes in weeks, not quarters.</p>
+      <a href="#" target="_blank" class="btn-link">
+        Start Your POC <span>→</span>
+      </a>
+    </div>
+    
+    <div class="cta-card">
+      <div class="cta-card-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/>
+        </svg>
+      </div>
+      <h3>How Klarna Cut Support Costs With AI Agents</h3>
+      <p>Explore the case study behind the benchmark everyone&#39;s citing — and see the reliability, latency, and deflection metrics that matter most to engineering leaders scaling AI in production.</p>
+      <a href="#" target="_blank" class="btn-link">
+        View the Case Study <span>→</span>
+      </a>
+    </div>
+    
+  </div>
+</section>
+
+
+
+
+<section id="resources">
+  <p class="section-label">Resources</p>
+  <h2 class="section-title">Built for your use case</h2>
+  <p class="section-sub">In-depth guides written specifically for FanDuel's context and goals.</p>
+  <div class="posts-grid">
+    
+    <a href="multi-agent-routing-fanduel-support-bottlenecks.html" class="post-card">
+      <span class="post-card-tag">Guide</span>
+      <h3>How Multi-Agent Routing Can Fix FanDuel&#39;s Most Expensive Support Bottlenecks</h3>
+      <span class="read-link">Read more →</span>
+    </a>
+    
+    <a href="eval-driven-agent-deployment-fanduel.html" class="post-card">
+      <span class="post-card-tag">Guide</span>
+      <h3>Eval-Driven Agent Deployment: Why FanDuel Can&#39;t Afford to Skip This Step</h3>
+      <span class="read-link">Read more →</span>
+    </a>
+    
+  </div>
+</section>
+
+
+
+
+<section id="code">
+  <p class="section-label">Sample Code</p>
+  <h2 class="section-title">See it in action</h2>
+  <p class="section-sub">Production-ready patterns your team can adapt today.</p>
+  
+  <div class="code-block">
+    <div class="code-block-header">
+      <span class="code-block-title">FanDuel Bet Inquiry &amp; Dispute Resolution Agent</span>
+      <span class="code-block-lang">python</span>
+    </div>
+    
+    <div class="code-block-desc">A tool-calling LangChain agent that handles FanDuel bet disputes end-to-end — fetching bet records, reviewing account standing, and autonomously issuing refunds or escalating to a human agent based on configurable business rules.</div>
+    
+    <pre><code>from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.tools import tool
+from langchain.agents import AgentExecutor, create_tool_calling_agent
+from pydantic import BaseModel, Field
+from typing import Literal
+
+# --- Structured output schema for dispute resolution decisions ---
+class DisputeResolution(BaseModel):
+    bet_id: str = Field(description=&#34;The bet ID under dispute&#34;)
+    decision: Literal[&#34;approved&#34;, &#34;denied&#34;, &#34;escalate_to_human&#34;] = Field(description=&#34;Resolution outcome&#34;)
+    refund_amount: float = Field(description=&#34;Refund amount in USD, 0.0 if denied&#34;)
+    explanation: str = Field(description=&#34;Customer-facing explanation of the decision&#34;)
+
+# --- Mock tools representing FanDuel&#39;s internal APIs ---
+@tool
+def get_bet_details(bet_id: str) -&gt; dict:
+    &#34;&#34;&#34;Fetch bet details from FanDuel&#39;s bet ledger by bet ID.&#34;&#34;&#34;
+    # Simulated bet record
+    return {
+        &#34;bet_id&#34;: bet_id, &#34;user_id&#34;: &#34;FD-8821903&#34;, &#34;sport&#34;: &#34;NFL&#34;,
+        &#34;market&#34;: &#34;Kansas City Chiefs ML&#34;, &#34;stake&#34;: 50.00, &#34;odds&#34;: -110,
+        &#34;status&#34;: &#34;settled_loss&#34;, &#34;settled_at&#34;: &#34;2024-01-14T23:05:00Z&#34;,
+        &#34;dispute_eligible&#34;: True, &#34;game_result&#34;: &#34;Chiefs won 27-20&#34;
+    }
+
+@tool
+def get_account_history(user_id: str) -&gt; dict:
+    &#34;&#34;&#34;Retrieve a customer&#39;s account standing and dispute history.&#34;&#34;&#34;
+    return {&#34;user_id&#34;: user_id, &#34;account_status&#34;: &#34;good_standing&#34;,
+            &#34;prior_disputes&#34;: 0, &#34;total_deposits&#34;: 1200.00, &#34;win_rate&#34;: 0.44}
+
+@tool
+def submit_refund(bet_id: str, amount: float, reason: str) -&gt; str:
+    &#34;&#34;&#34;Process a refund to the customer&#39;s FanDuel wallet.&#34;&#34;&#34;
+    return f&#34;Refund of ${amount:.2f} for bet {bet_id} submitted successfully. Reason: {reason}&#34;
+
+llm = ChatOpenAI(model=&#34;gpt-4o&#34;, temperature=0)
+tools = [get_bet_details, get_account_history, submit_refund]
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;, &#34;&#34;&#34;You are a FanDuel support agent specializing in bet disputes.
+    Always fetch bet details and account history before making a resolution decision.
+    Approve refunds only when there is a clear data discrepancy (e.g., bet marked lost
+    despite the customer&#39;s selection winning). Escalate repeat disputes or large stakes (&gt;$500) to a human.&#34;&#34;&#34;),
+    (&#34;human&#34;, &#34;{input}&#34;),
+    (&#34;placeholder&#34;, &#34;{agent_scratchpad}&#34;),
+])
+
+agent = create_tool_calling_agent(llm, tools, prompt)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+
+# --- Simulate an incoming customer dispute ---
+customer_message = (
+    &#34;Hi, my bet ID is BET-449921. I placed $50 on the Chiefs moneyline and they WON, &#34;
+    &#34;but my account shows a loss. Can you look into this and refund me?&#34;
+)
+
+response = agent_executor.invoke({&#34;input&#34;: customer_message})
+print(&#34;\n=== Agent Response ===&#34;)
+print(response[&#34;output&#34;])</code></pre>
+  </div>
+  
+  <div class="code-block">
+    <div class="code-block-header">
+      <span class="code-block-title">FanDuel Responsible Gambling Intervention &amp; Deposit Triage Chain</span>
+      <span class="code-block-lang">python</span>
+    </div>
+    
+    <div class="code-block-desc">An LCEL chain that triages inbound FanDuel support tickets by enriching them with live CRM data, then uses Claude to classify urgency, detect responsible gambling risk signals, and generate a compliant, empathetic draft response — all as a validated Pydantic object.</div>
+    
+    <pre><code>from langchain_anthropic import ChatAnthropic
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import PydanticOutputParser
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
+from pydantic import BaseModel, Field
+from typing import Literal
+
+# --- Structured triage schema for support tickets ---
+class SupportTriage(BaseModel):
+    ticket_type: Literal[&#34;deposit_issue&#34;, &#34;withdrawal_issue&#34;, &#34;responsible_gambling&#34;, &#34;general_inquiry&#34;]
+    urgency: Literal[&#34;low&#34;, &#34;medium&#34;, &#34;high&#34;, &#34;critical&#34;] = Field(
+        description=&#34;critical = immediate RG intervention required&#34;)
+    recommended_action: str = Field(description=&#34;Specific next step for the support agent or system&#34;)
+    rg_intervention_required: bool = Field(description=&#34;True if responsible gambling resources must be surfaced&#34;)
+    draft_response: str = Field(description=&#34;Empathetic, compliant draft reply to send to the customer&#34;)
+
+# --- Simulated customer context loader (would query FanDuel&#39;s CRM in production) ---
+def load_customer_context(inputs: dict) -&gt; dict:
+    &#34;&#34;&#34;Enrich the ticket with account data from FanDuel&#39;s CRM.&#34;&#34;&#34;
+    return {
+        **inputs,
+        &#34;customer_context&#34;: {
+            &#34;user_id&#34;: &#34;FD-3341087&#34;,
+            &#34;deposit_count_last_24h&#34;: 7,       # High-frequency deposits — RG signal
+            &#34;net_loss_last_7d&#34;: -843.00,
+            &#34;withdrawal_pending&#34;: True,
+            &#34;withdrawal_amount&#34;: 200.00,
+            &#34;account_status&#34;: &#34;active&#34;,
+            &#34;self_exclusion_history&#34;: False,
+        }
+    }
+
+llm = ChatAnthropic(model=&#34;claude-3-5-sonnet-20241022&#34;, temperature=0)
+parser = PydanticOutputParser(pydantic_object=SupportTriage)
+
+prompt = ChatPromptTemplate.from_messages([
+    (&#34;system&#34;, &#34;&#34;&#34;You are a FanDuel customer support triage specialist trained in responsible gambling (RG) protocols.
+
+Analyze the customer message AND their account context to produce a structured triage decision.
+RG intervention is CRITICAL if: deposit_count_last_24h &gt; 5, net_loss_last_7d &lt; -500, or the customer
+expresses distress. Always draft empathetic, jargon-free responses. Comply with AGA Safe Play guidelines.
+
+{format_instructions}&#34;&#34;&#34;),
+    (&#34;human&#34;, &#34;Customer message: {message}\n\nAccount context: {customer_context}&#34;),
+])
+
+# --- LCEL chain: enrich context → format prompt → call LLM → parse structured output ---
+triage_chain = (
+    RunnablePassthrough()                          # Pass raw input through
+    | RunnableLambda(load_customer_context)        # Enrich with CRM data
+    | prompt.partial(format_instructions=parser.get_format_instructions())
+    | llm
+    | parser
+)
+
+# --- Simulate an inbound support message ---
+ticket = {
+    &#34;message&#34;: (
+        &#34;I&#39;ve been trying to withdraw my $200 for 3 days and it&#39;s still pending. &#34;
+        &#34;I&#39;m really stressed out, I need that money back. Please help.&#34;
+    )
+}
+
+triage_result: SupportTriage = triage_chain.invoke(ticket)
+
+print(f&#34;Ticket Type   : {triage_result.ticket_type}&#34;)
+print(f&#34;Urgency       : {triage_result.urgency}&#34;)
+print(f&#34;RG Intervention: {triage_result.rg_intervention_required}&#34;)
+print(f&#34;Action        : {triage_result.recommended_action}&#34;)
+print(f&#34;\nDraft Response:\n{triage_result.draft_response}&#34;)</code></pre>
+  </div>
+  
+
+
+</main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      LangChain
+    </div>
+    <p>Built for FanDuel — <a href="https://langchain.com" target="_blank">langchain.com</a></p>
+  </footer>
+</body>
+</html>

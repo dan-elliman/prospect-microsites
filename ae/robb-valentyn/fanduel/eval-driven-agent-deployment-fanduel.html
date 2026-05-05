@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval-Driven Agent Deployment: Why FanDuel Can&#39;t Afford to Skip This Step</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ──────────────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ── Tokens ─────────────────────────────────────────────────────────────── */
+    :root {
+      --bg:            #030710;
+      --bg-card:       #0a1220;
+      --bg-card-alt:   #0f1a2e;
+      --green:         #1d3d3c;
+      --green-mid:     #2a5250;
+      --green-light:   #4a9e9b;
+      --violet:        #beb4fd;
+      --violet-dark:   #7c6ef5;
+      --violet-dim:    rgba(190,180,253,0.12);
+      --orange:        #d85522;
+      --text:          #eef2f7;
+      --text-muted:    #7b8ea8;
+      --text-dim:      #4a5568;
+      --border:        rgba(190,180,253,0.10);
+      --border-strong: rgba(190,180,253,0.28);
+      --radius:        10px;
+      --radius-lg:     18px;
+      --gradient-cta:  linear-gradient(135deg, #ff7448, #ff4848 50%, #6248ff);
+      --gradient-hero: linear-gradient(135deg, rgba(29,61,60,0.6) 0%, rgba(98,72,255,0.15) 100%);
+      --shadow-card:   0 4px 24px rgba(0,0,0,0.4);
+      --shadow-glow:   0 0 40px rgba(190,180,253,0.08);
+    }
+
+    /* ── Base ───────────────────────────────────────────────────────────────── */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Manrope', 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--violet); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #fff; }
+    img { max-width: 100%; }
+
+    /* ── Nav ────────────────────────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(3,7,16,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.95rem; font-weight: 700; color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .nav-logo svg { color: var(--green-light); flex-shrink: 0; }
+    .nav-logo .nav-company {
+      color: var(--text-muted);
+      font-weight: 500;
+      padding-left: 0.5rem;
+      border-left: 1px solid var(--border-strong);
+      margin-left: 0.25rem;
+    }
+    .nav-cta {
+      font-size: 0.8rem; font-weight: 700;
+      background: var(--violet-dim);
+      color: var(--violet);
+      border: 1px solid var(--border-strong);
+      padding: 0.4rem 1rem;
+      border-radius: 99px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--violet); color: var(--bg); }
+
+    /* ── Layout ─────────────────────────────────────────────────────────────── */
+    main { max-width: 960px; margin: 0 auto; padding: 0 1.5rem 5rem; }
+    section { margin-top: 5rem; }
+
+    /* ── Hero ───────────────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 5rem 1rem 4rem;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--gradient-hero);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(98,72,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-light);
+      border: 1px solid rgba(74,158,155,0.35);
+      background: rgba(29,61,60,0.3);
+      padding: 0.3rem 0.85rem;
+      border-radius: 99px;
+      margin-bottom: 1.75rem;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 .gradient-text {
+      background: var(--gradient-cta);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--gradient-cta);
+      color: #fff;
+      font-weight: 700; font-size: 0.875rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 99px;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(98,72,255,0.35);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); color: #fff; }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: var(--violet-dim);
+      color: var(--violet);
+      font-weight: 700; font-size: 0.875rem;
+      border: 1px solid var(--border-strong);
+      padding: 0.65rem 1.5rem;
+      border-radius: 99px;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { background: var(--violet); color: var(--bg); transform: translateY(-1px); }
+
+    /* ── Section headings ───────────────────────────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--violet);
+      margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-size: 1.65rem; font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .section-sub {
+      color: var(--text-muted); font-size: 0.95rem;
+      margin-bottom: 2rem; max-width: 540px;
+    }
+
+    /* ── CTA Cards ──────────────────────────────────────────────────────────── */
+    .ctas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .cta-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient-cta);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .cta-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+    }
+    .cta-card:hover::before { opacity: 1; }
+    .cta-card-icon {
+      width: 40px; height: 40px;
+      background: var(--violet-dim);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      color: var(--violet);
+      font-size: 1.1rem;
+    }
+    .cta-card h3 {
+      font-size: 1rem; font-weight: 700;
+      margin-bottom: 0.5rem; color: var(--text);
+    }
+    .cta-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.25rem; }
+    .cta-card .btn-link {
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--violet);
+      display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .cta-card .btn-link:hover { color: #fff; }
+
+    /* ── Blog / Resources ───────────────────────────────────────────────────── */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .post-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .post-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+    .post-card-tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--green-light);
+      margin-bottom: 0.75rem;
+    }
+    .post-card h3 {
+      font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.5rem; flex: 1;
+    }
+    .post-card .read-link {
+      margin-top: 1rem; font-size: 0.8rem; font-weight: 700;
+      color: var(--violet);
+      display: inline-flex; align-items: center; gap: 0.25rem;
+    }
+
+    /* ── Code Samples ───────────────────────────────────────────────────────── */
+    .code-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .code-block-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card-alt);
+    }
+    .code-block-title { font-size: 0.875rem; font-weight: 700; color: var(--text); }
+    .code-block-lang {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--violet);
+      background: var(--violet-dim); padding: 0.2rem 0.6rem;
+      border-radius: 99px; border: 1px solid var(--border-strong);
+    }
+    .code-block-desc {
+      padding: 0.85rem 1.25rem;
+      font-size: 0.8rem; color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    pre {
+      margin: 0; padding: 1.25rem;
+      background: #010509;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.8rem; line-height: 1.7;
+      color: #c9d1d9;
+    }
+    pre code { background: none; padding: 0; }
+    code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.85em;
+      background: var(--violet-dim);
+      color: var(--violet);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+
+    /* ── Blog post page ─────────────────────────────────────────────────────── */
+    .post-page { padding: 3rem 0; }
+    .post-page .post-meta {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    .post-page .tag {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--violet-dim); color: var(--violet);
+      border: 1px solid var(--border-strong);
+      padding: 0.25rem 0.65rem; border-radius: 99px;
+    }
+    .post-page h1 {
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      font-weight: 800; letter-spacing: -0.025em;
+      margin-bottom: 2rem;
+      line-height: 1.25;
+    }
+    .post-body {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      font-size: 0.975rem; line-height: 1.85;
+      color: #c5d0de;
+    }
+    .post-body p { margin-bottom: 1.25rem; }
+    .post-body h2 { font-size: 1.25rem; font-weight: 700; color: var(--text); margin: 2rem 0 0.75rem; }
+    .post-body h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin: 1.5rem 0 0.5rem; }
+    .post-body ul, .post-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+    .post-body li { margin-bottom: 0.35rem; }
+    .post-body strong { color: var(--text); font-weight: 700; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-size: 0.8rem; font-weight: 700;
+      color: var(--text-muted); margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--violet); }
+
+    /* ── Divider ────────────────────────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0 0;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────────────────── */
+    .footer {
+      margin-top: 5rem;
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem; color: var(--text-dim);
+    }
+    .footer a { color: var(--text-muted); }
+    .footer a:hover { color: var(--violet); }
+    .footer-brand {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-weight: 700; color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      LangChain
+      <span class="nav-company">FanDuel</span>
+    </a>
+    <a href="https://langchain.com" target="_blank" class="nav-cta">Get Started →</a>
+  </nav>
+
+  <main>
+
+<div class="post-page">
+  <a href="index.html" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Back to overview
+  </a>
+
+  
+  <div class="post-meta">
+    <span class="tag">LLM Evaluation</span><span class="tag">Responsible AI</span><span class="tag">LangSmith</span><span class="tag">Regulated Industries</span>
+  </div>
+  
+
+  <h1>Eval-Driven Agent Deployment: Why FanDuel Can&#39;t Afford to Skip This Step</h1>
+
+  <div class="post-body">
+    <p>Regulated industries don't get to move fast and fix hallucinations later. If a FanDuel support agent tells a user their withdrawal will clear in 24 hours when the actual hold is 5 business days, that's not a product bug — it's a compliance exposure and a trust-destroying moment that spreads on Reddit within the hour.</p>
+
+<p>This is why the standard "vibe-check the demo and ship it" approach to LLM deployment doesn't work in sports betting. What does work is an eval-driven deployment pipeline — and it's more tractable than it sounds.</p>
+
+<h2>The Gap Between Demo and Production</h2>
+<p>LLM agents perform well on the examples you've seen. They fail on the distribution of inputs you haven't. In a betting context, that distribution is enormous: edge-case promo terms, state-specific withdrawal rules, voided bet scenarios tied to specific officiating calls. No amount of manual testing covers it. You need systematic evaluation against real production traces.</p>
+
+<h2>How LangSmith Closes the Loop</h2>
+<p>LangSmith's eval framework operates in two modes that matter here. Offline evals run your agent against curated datasets — think: 500 real support transcripts with known correct resolutions — before any code ships. Online evals sample live production traces and score them against ground-truth criteria automatically, flagging regressions as they emerge.</p>
+<p>The workflow looks roughly like this:</p>
+<ul>
+  <li><strong>Build a golden dataset</strong> from historical support tickets, tagged by resolution type and correctness.</li>
+  <li><strong>Define evaluators</strong> for the things that matter: did the agent cite the correct promo terms? Did it correctly identify a withdrawal hold reason? Did it avoid quoting payout percentages it can't verify?</li>
+  <li><strong>Run offline evals</strong> on every agent change before promotion to staging.</li>
+  <li><strong>Sample production traces</strong> continuously, auto-score them, and alert when accuracy on a specific intent category drops below threshold.</li>
+</ul>
+
+<pre><code># LangSmith eval example
+from langsmith import Client
+from langsmith.evaluation import evaluate
+
+client = Client()
+
+results = evaluate(
+    target=support_agent.invoke,
+    data="fanduel-withdrawal-disputes-golden-set",
+    evaluators=[resolution_accuracy, policy_citation_check],
+    experiment_prefix="withdrawal-agent-v2"
+)
+</code></pre>
+
+<h2>The C.H. Robinson Precedent</h2>
+<p>C.H. Robinson used this exact eval-loop approach to scale an LLM-powered logistics agent from a cautious pilot to 5,500 automated orders per day. The eval infrastructure wasn't a nice-to-have — it was the mechanism that gave the business the confidence to expand scope. FanDuel's path from "pilot bot handling deposit FAQs" to "full-spectrum account management agent" runs through the same gate.</p>
+
+<h2>What Confident Looks Like</h2>
+<p>The goal isn't a perfect agent on day one. It's a measurable agent — one where the engineering team can tell the VP of Compliance exactly what the accuracy rate is on withdrawal policy questions, show the trend line over the last 30 days, and point to the specific traces where it got it wrong and why. That's the artifact that gets an AI agent past legal review and into production at scale.</p>
+
+<p>LangSmith's tracing integrates via OpenTelemetry, so instrumentation doesn't require a rip-and-replace of existing infrastructure. The eval framework sits on top of whatever LLM or agent architecture is already running.</p>
+  </div>
+</div>
+
+</main>
+
+  <footer class="footer">
+    <div class="footer-brand">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+      </svg>
+      LangChain
+    </div>
+    <p>Built for FanDuel — <a href="https://langchain.com" target="_blank">langchain.com</a></p>
+  </footer>
+</body>
+</html>
