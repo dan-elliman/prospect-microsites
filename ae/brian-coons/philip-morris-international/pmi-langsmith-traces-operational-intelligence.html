@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMI&#39;s Production Traces Are a Product Roadmap — Here&#39;s How to Read Them | Built with LangChain</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Philip Morris International × LangChain</a>
+  </nav>
+  <main>
+<article class="post">
+  <header>
+    <h1>PMI&#39;s Production Traces Are a Product Roadmap — Here&#39;s How to Read Them</h1>
+    
+    <div class="tags"><span class="tag">langsmith</span><span class="tag">observability</span><span class="tag">langgraph</span><span class="tag">operational-intelligence</span></div>
+    
+  </header>
+  <div class="post-body"><p>PMI is already running agents in production and generating traces in LangSmith. That means there is already a living record of where AI workflows are performing, where they are stalling, and where human reviewers are stepping in to correct outputs. Most teams treat this observability data as a debugging tool. It is actually something more valuable: a signal for what to build next.</p>
+
+<h2>What Lives Inside a Production Trace</h2>
+
+<p>Every LangSmith trace captures the full execution path of an agent run — the input, each retrieval step, every LLM call, the final output, latency at each node, and any human-in-the-loop intervention. For a regulatory documentation agent working on IQOS submission packages, a trace might reveal that the agent retrieves the correct clinical study data 94% of the time but consistently fails to surface the right aerosol chemistry references when the query comes from a non-English market brief.</p>
+
+<p>That failure pattern is invisible in aggregate metrics. It surfaces in traces.</p>
+
+<h2>The Insights Agent as an Internal Analyst</h2>
+
+<p>LangSmith's Insights Agent is designed to run over accumulated production traces and answer operational questions in plain language — no SQL, no dashboard configuration required. For PMI's Head of AI or VP of Digital Innovation, that means asking questions like:</p>
+
+<ul>
+  <li><em>Which regulatory workflows have the highest human correction rate over the last 90 days?</em></li>
+  <li><em>Where are agents timing out on multi-step submission drafting tasks?</em></li>
+  <li><em>What document types are most frequently retrieved but least often used in the final output — suggesting retrieval pipeline misalignment?</em></li>
+</ul>
+
+<p>The answers are not hypothetical — they come from PMI's own operational data, grounded in real submission workflows across real markets.</p>
+
+<h2>Turning Observability Into Automation Opportunity</h2>
+
+<p>The LangGraph runtime underpinning PMI's longer-horizon agents — multi-step workflows like drafting a market-specific product compliance dossier or synthesizing a scientific literature review for a new reduced-risk product — is built for durable execution with checkpointing. When the Insights Agent surfaces a recurring failure node in one of those workflows, the fix is not a rewrite. It is a targeted adjustment to a specific graph node, testable against the eval dataset before redeployment.</p>
+
+<p>This is the operational loop that separates AI teams running pilots from AI teams running programs: traces inform evals, evals gate deployments, deployments generate new traces. For PMI, where the cost of a regulatory error is measured in market access and not just engineering time, closing that loop with discipline is the difference between AI as an experiment and AI as infrastructure.</p></div>
+  <a href="index.html" class="back-link">Back to overview</a>
+</article>
+</main>
+  <footer class="footer">
+    <p>Built for Philip Morris International — powered by LangChain</p>
+  </footer>
+</body>
+</html>
